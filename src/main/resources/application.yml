@@ -1,0 +1,28 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  datasource:
+    url: jdbc:postgresql://localhost:5432/graduate_task
+    username: 'g1'     # PostgreSQL 사용자명
+    password: '0000'   # PostgreSQL 비밀번호
+    driver-class-name: org.postgresql.Driver  # PostgreSQL 드라이버
+  jpa:
+    hibernate:
+      ddl-auto: update  # 필요에 따라 'create', 'update', 'validate' 설정 가능
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
+        format_sql: true
+    open-in-view: on
+    defer-datasource-initialization: true
+    database: postgresql
+
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+
+jwt:
+  token:
+    secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
