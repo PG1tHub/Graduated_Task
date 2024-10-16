@@ -1,0 +1,5 @@
+ALTER TABLE category_price
+ADD CONSTRAINT unique_category_status UNIQUE (category_no, status);
+
+
+category_price 저거 두개 구분해야해욤
