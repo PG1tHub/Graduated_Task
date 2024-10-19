@@ -35,7 +35,7 @@ const sampleData = [
   {
     "id": 3,
     "title": "플레이스테이션 5",
-    "price": 600000,
+    "price": 700000,
     "imageUrl": PS5Image,
     "createdAt": "2일 전",
     "category": "게임",

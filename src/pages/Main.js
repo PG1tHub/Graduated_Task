@@ -104,7 +104,7 @@ const Main = () => {
       <div className="main-font">실시간 추천 아이템 !</div>
       <div className="product-list">
         {filteredProducts.map(product => (
-          <Link to={`/product/${product.id}`} key={product.id}>
+          <Link to={`/recommended-product/${product.id}`} key={`recommend-${product.id}`}>
             <ProductCard product={product} />
           </Link>
         ))}
@@ -113,10 +113,10 @@ const Main = () => {
       <div className="main-font">방금 등록된 상품</div>
       <div className="product-list">
         {filteredProductsLatest.map(product => (
-          <Link to={`/product/${product.id}`} key={product.id}>
+          <Link to={`/latest-product/${product.id}`} key={`latest-${product.id}`}>
             <ProductCard product={product} />
           </Link>
-      ))}
+        ))}
       </div>
     </div>
   );

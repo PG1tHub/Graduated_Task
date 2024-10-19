@@ -7,6 +7,8 @@
 
 
 .recommended-price {
+  position: relative;
+  width: 100%;
   margin-top: 5px;
   font-family: SUIT-Regular;
   font-size: 18px
@@ -36,4 +38,18 @@
 
 .price-range span {
   font-weight: bold;
+}
+
+.out-of-range-marker {
+  position: absolute;
+  top: -20px;  
+  left: calc(100% + 20px); 
+  background-color: #28275a;
+  padding: 4px;
+  border-radius: 4px;
+  color: white;
+}
+
+.marker-label {
+  font-size: 12px;
 }

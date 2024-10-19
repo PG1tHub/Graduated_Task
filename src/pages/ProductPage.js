@@ -10,10 +10,11 @@ import ChatImage from '../images/Chat.svg';
 import ListImage from '../images/List.svg';
 import WishImage from '../images/Wish.svg';
 import { useState } from 'react';
+import sampleDataLatest from '../dummy_latest';
 
 const ProductPage = () => {
   const { id } = useParams(); 
-  const product = sampleData.find(item => item.id === parseInt(id)); 
+  const product = sampleData.find(item => item.id === parseInt(id)) || sampleDataLatest.find(item => item.id === parseInt(id)); 
   // const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -42,11 +43,11 @@ const ProductPage = () => {
   };
 
   const stateDescriptions = {
-    1: "상태 좋지 않음",
-    2: "사용감 많음",
-    3: "상태 양호",
-    4: "거의 새것",
-    5: "미개봉 새 상품"
+    1: "새 상품",
+    2: "사용감 적음",
+    3: "사용감 많음",
+    4: "중고",
+    5: "고장/파손"
   };
 
   // const handleLogin = () => {

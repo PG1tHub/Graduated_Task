@@ -9,6 +9,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/recommended-product/:id" element={<ProductPage />} />
+        <Route path="/latest-product/:id" element={<ProductPage />} /> 
         {/* <Route path="/mypage" element={<MyPage />} /> */}
       </Routes>
     </Router>

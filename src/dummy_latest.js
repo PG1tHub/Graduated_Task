@@ -7,9 +7,9 @@ import IPhoneImage from './images/iphone.png';
 
 const sampleDataLatest = [
   {
-    "id": 1,
+    "id": 11,
     "title": "에어팟 프로 2세대",
-    "price": 350000,
+    "price": 450000,
     "imageUrl": AirPodsPro2Image,
     "createdAt": "4분 전",
     "category": "웨어러블",
@@ -20,7 +20,7 @@ const sampleDataLatest = [
   },
   
   {
-    "id": 2,
+    "id": 12,
     "title": "아이폰 13",
     "price": 950000,
     "imageUrl": IphoneImage,
@@ -33,9 +33,9 @@ const sampleDataLatest = [
   },
 
   {
-    "id": 3,
+    "id": 13,
     "title": "아이폰 13",
-    "price": 750000,
+    "price": 850000,
     "imageUrl": IPhoneImage,
     "createdAt": "32분 전",
     "category": "휴대폰",
@@ -46,7 +46,7 @@ const sampleDataLatest = [
   },
 
   {
-    "id": 4,
+    "id": 14,
     "title": "맥북 프로 16인치",
     "price": 2400000,
     "imageUrl": MacBookProImage,
@@ -59,9 +59,9 @@ const sampleDataLatest = [
   },
   
   {
-    "id": 5,
+    "id": 15,
     "title": "닌텐도 스위치",
-    "price": 350000,
+    "price": 440000,
     "imageUrl": SwitchImage,
     "createdAt": "1시간 전",
     "category": "게임",
@@ -73,7 +73,7 @@ const sampleDataLatest = [
   
 
   {
-    "id": 6,
+    "id": 16,
     "title": "아이폰 14 프로",
     "price": 1400000,
     "imageUrl": Iphone14ProImage,
