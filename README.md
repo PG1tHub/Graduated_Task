@@ -11,3 +11,9 @@
 
 ## 'item'
 <img width="784" alt="image" src="https://github.com/user-attachments/assets/b910449b-9544-4601-81da-b739115a5ff1">
+
+## 주요 변경 사항
+- category 테이블에 **item_count 칼럼 추가**
+- item > category_no 개수 저장
+- 비동기 처리 위해 일정 개수 넘을때마다 update문 실행
+<img width="335" alt="image" src="https://github.com/user-attachments/assets/45fdb369-ca69-4167-82c9-ead9c665e17d">
