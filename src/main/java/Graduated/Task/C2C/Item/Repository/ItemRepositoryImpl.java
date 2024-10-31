@@ -42,10 +42,10 @@ public class ItemRepositoryImpl extends Querydsl4RepositorySupport implements It
         return selectFrom(item).where(booleanBuilder,item.type.eq(Item.State.sale)).offset(startPage).limit(PageSize).fetch();
     }
     public List<Item> findPopularItem(){
-        return selectFrom(item).orderBy(item.viewCount.desc()).limit(4).fetch();
+        return selectFrom(item).orderBy(item.viewCount.desc()).limit(6).fetch();
     }
     public List<Item> findRecentItem(){
-        return selectFrom(item).orderBy(item.createdDate.asc()).limit(4).fetch();
+        return selectFrom(item).orderBy(item.createdDate.asc()).limit(6).fetch();
     }
 
 
