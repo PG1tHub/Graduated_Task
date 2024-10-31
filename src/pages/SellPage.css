@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'SUIT-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* .Sell {
+  width: 100%;
+  background-color: #ffffff;
+  font-family: SUIT-Regular;
+  margin: 20px;
+  padding: 0 0 60px;
+  align-items: center;
+  justify-content: center;
+} */
+
+.Sell-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 40px;
+  margin: 0 40px;
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.logo {
+  width: auto;
+  height: auto;
+  display: flex;
+  margin-right: auto;
+}
+
+.Write {
+  pointer-events: auto;
+}
+
+.image-preview {
+  width: 200px;
+  height: 200px;
+  overflow: hidden; /*넘치는 부분 숨기기*/
+  display: flex; 
+  align-items: center; /*수직 중앙정렬*/
+  justify-content: center; /*수평 중앙*/
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}

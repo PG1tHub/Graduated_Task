@@ -150,6 +150,12 @@ body {
   font-size: 18px;
 }
 
+.graph {
+  font-size: 18px;
+  display: flex;
+  margin: 20px 0;
+}
+
 /* .trust {
   font-size: 18px;
 } */

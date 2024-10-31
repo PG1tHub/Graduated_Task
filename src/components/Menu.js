@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ChatIcon from '../images/ChatIcon';
+import SellIcon from '../images/SellIcon';
 import SearchIcon from '../images/SearchIcon';
 import ProfileIcon from '../images/ProfileIcon';
 import './Menu.css';
 
-const Menu = () => {
+const Menu = ({ isLoggedIn }) => {
   return (
     <div className="menu">
-      <Link to="/chat" className="link">
+      <Link to="/item" className="link">
         <span className="link-icon">
-          <ChatIcon />
+          <SellIcon />
         </span>
-        <span className="link-title">Chat</span>
+        <span className="link-title">Sell</span>
       </Link>
 
       <Link to="/search" className="link">
@@ -22,12 +22,20 @@ const Menu = () => {
         <span className="link-title">Search</span>
       </Link>
 
-      <Link to="/profile" className="link">
+      {/* <Link to="/userInfo" className="link"> */}
+      <span className='link' onClick={() => {
+        if(isLoggedIn){
+          window.location.href = '/userInfo';
+        } else {
+          window.location.href = '/login';
+        }
+      }}> 
         <span className="link-icon">
           <ProfileIcon />
         </span>
         <span className="link-title">Profile</span>
-      </Link>
+      {/* </Link> */}
+      </span> 
     </div>
   );
 };

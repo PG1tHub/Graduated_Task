@@ -5,7 +5,7 @@ import './ProductPage.css';
 import Menu from '../components/Menu';
 import RecommendedPrice from '../components/RecommendedPrice';
 import Logo from '../images/logo.png';
-import MoonImg from '../images/moon.png';
+import CheckImg from '../images/check.png';
 import ChatImage from '../images/Chat.svg';
 import ListImage from '../images/List.svg';
 import WishImage from '../images/Wish.svg';
@@ -68,7 +68,7 @@ const ProductPage = () => {
     <div className="product-page">
       <header className="App-header">
         <Link to="/">
-          <img src={Logo} alt="로고" className="logo" onClick={() => window.location.reload()} />
+          <img src={Logo} alt="로고" className="logo" />
         </Link>
         <Menu /> 
       </header>
@@ -101,7 +101,7 @@ const ProductPage = () => {
           <div className="product-category">
             <div className="category-name">{product.category || '일반'}</div>
             <div className="product-title">
-              {product.title} {product.isPriceSimilar ? <img src={MoonImg} alt="웃음" className="emoty"/> : ""}
+              {product.title} {product.isPriceSimilar ? <img src={CheckImg} alt="웃음" className="emoty"/> : ""}
 
             </div>
           </div>
@@ -109,6 +109,7 @@ const ProductPage = () => {
             <strong className="product-price">{product.price.toLocaleString()} 원</strong>
           </div>
           <div className="product-state"> 상태 : {stateDescriptions[product.itemState]} </div> 
+          <div className="graph">추천 가격 범위</div>
           <RecommendedPrice 
             minPrice={product.recommendedMinPrice} 
             maxPrice={product.recommendedMaxPrice} 
