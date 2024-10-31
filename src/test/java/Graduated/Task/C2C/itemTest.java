@@ -14,8 +14,11 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.zeroturnaround.exec.ProcessExecutor;
+import org.zeroturnaround.exec.ProcessResult;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 @SpringBootTest
 class itemTest {
@@ -117,15 +120,9 @@ class itemTest {
 	}
 	@Test
 	void Iteminfo() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
-		em.clear();
-		categoryRepository.findAllPost();
-		ItemDetailDto itemDetailDto = itemService.itemInformation(l);
-		System.out.println(itemDetailDto);
+		Future<ProcessResult> python3 = new ProcessExecutor().command("python3", "/Users/ihajun/Desktop/Random_Forest_Model.py","3")
+				.redirectOutput(System.out)
+				.redirectError(System.out).start().getFuture();
 	}
 
 
