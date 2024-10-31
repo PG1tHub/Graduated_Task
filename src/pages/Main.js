@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Menu from '../components/Menu';
 import './Main.css';
 import Logo from '../images/logo.png';
-import sampleData from '../dummy';
-import sampleDataLatest from '../dummy_latest';
+// import sampleData from '../dummy';
+// import sampleDataLatest from '../dummy_latest';
 import MainImage from '../images/main.png';
 import ListImage from '../images/List.svg';
 
@@ -15,23 +16,58 @@ const Main = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("전체");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setProducts(sampleData);
-  }, []);
+    axios.get('http://43.202.46.29:8080/main')
+    .then(response => {
+      console.log('API호출 성공');
+      console.log(response);  // 전체 응답 객체를 출력하여 데이터 구조와 상태를 확인합니다.
+      console.log(response.data);  // 데이터 객체를 확인합니다
+      if(response.data.resultCode === 200) {
+        const popularItems = response.data.data.popularItems.map(item => ({
+          itemId: item.id, // id -> itemId
+          itemName: item.title, // title -> itemName
+          price: item.price,
+          image: item.imageUrl, // imageUrl -> image
+          time: item.createdAt, // createdAt -> time
+          category: item.category,
+          priceSimilar: item.isPriceSimilar, // isPriceSimilar -> priceSimilar
+          itemState: item.itemState,
+          minPrice: item.recommendedMinPrice, // recommendedMinPrice -> minPrice
+          maxPrice: item.recommendedMaxPrice // recommendedMaxPrice -> maxPrice
+        }));
+        
+        const recentItems = response.data.data.recentItems.map(item => ({
+          itemId: item.id, // id -> itemId
+          itemName: item.title, // title -> itemName
+          price: item.price,
+          image: item.imageUrl, // imageUrl -> image
+          time: item.createdAt, // createdAt -> time
+          category: item.category,
+          priceSimilar: item.isPriceSimilar, // isPriceSimilar -> priceSimilar
+          itemState: item.itemState,
+          minPrice: item.recommendedMinPrice, // recommendedMinPrice -> minPrice
+          maxPrice: item.recommendedMaxPrice // recommendedMaxPrice -> maxPrice
+        }));
+  
+        setProducts(popularItems);
+        setProductsLatest(recentItems);
+        setIsLoading(false);
+      } else {
+        console.error('Unexpected resultCode:', response.data.resultCode);
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching main page data:", error);
+      setIsLoading(false);
+    });
 
-  useEffect(() => {
-    setProductsLatest(sampleDataLatest);
   }, []);
 
   const handleLogoClick = () => {
     window.location.reload(); 
   };
-
-  // const handleSearch = (e) => {
-  //   setSearchQuery(e.target.value);
-  // };
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.innerText);
@@ -46,26 +82,18 @@ const Main = () => {
     setIsDropdownOpen(false);
   };
 
-  // const handleLogin = () => {
-  //   setIsLoggedIn(true);
-  // };
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
-  // const handleMyPageClick = () => {
-  //   if(!isLoggedIn) {
-  //     handleLogin();
-  //   } else {
-  //     console.log("마이페이지 이동");
-  //   }
-  // }
-
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredProducts = (products || []).filter(product => {
+    const matchesSearch = product.itemName.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = category === "전체" || product.category === category;
     return matchesSearch && matchesCategory;
   });
 
-  const filteredProductsLatest = productsLatest.filter(product => {
-    const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredProductsLatest = (productsLatest || []).filter(product => {
+    const matchesSearch = product.itemName.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = category === "전체" || product.category === category;
     return matchesSearch && matchesCategory;
   });

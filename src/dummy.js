@@ -7,16 +7,16 @@ import IPhone14ProImage from './images/iphone14pro.png';
 
 const sampleData = [
   {
-    "id": 1,
-    "title": "아이폰 13",
+    "id": 1, //id -> itemId
+    "title": "아이폰 13",  //title -> itemName
     "price": 950000,
-    "imageUrl": IphoneImage,
-    "createdAt": "10분 전",
+    "imageUrl": IphoneImage, //imageYrl -> image
+    "createdAt": "10분 전", //createdAt -> time
     "category": "휴대폰",
-    "isPriceSimilar": true,
+    "isPriceSimilar": true, //priceSimilar
     "itemState": 5,
-    "recommendedMinPrice": 880000,
-    "recommendedMaxPrice": 1020000
+    "recommendedMinPrice": 880000, //minPrice
+    "recommendedMaxPrice": 1020000 //maxPrice
   },
 
   {
