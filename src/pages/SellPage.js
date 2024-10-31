@@ -285,6 +285,7 @@ const SellPage = () => {
             minPrice={recommendedPrice.min} 
             maxPrice={recommendedPrice.max} 
             currentPrice={Number(currentPrice)}
+            className='graph'
           />
           <div className='productPrice'>가격</div>
           <input

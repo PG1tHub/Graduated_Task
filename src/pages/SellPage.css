@@ -57,6 +57,8 @@
   padding: 10px;
   text-align: center;
   color: #4c4c4c;
+  margin-bottom: 40px;
+  margin-left: 40%;
 }
 
 .image-preview-container {
@@ -112,6 +114,10 @@
   opacity: 1;
 }
 
+.productPrice{
+  margin-top: 40px;
+}
+
 .price {
   -moz-appearance: textfield; /* Firefox에서 스피너 제거 */
   -webkit-appearance: none; /* Chrome, Safari에서 스피너 제거 */
@@ -123,6 +129,10 @@
 .price::-webkit-outer-spin-button {
   -webkit-appearance: none; /* Chrome, Safari에서 스피너 제거 */
   margin: 0; /* 여백 제거 */
+}
+
+.productState {
+  margin-top: 40px;
 }
 
 .productState ul {
@@ -211,12 +221,18 @@ input[type=radio]:checked + label {
   border: none;
   height: 40px;
   text-align: center;
+  margin-left: 62%;
 }
 
 .buttonSubmit {
   cursor: pointer;
   height: 40px;
   text-align: center;
+  margin-top: 40px;
+}
+
+.graph {
+  margin: 40px 0;
 }
 
 
