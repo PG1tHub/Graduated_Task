@@ -35,6 +35,7 @@ public class UserController {
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
+
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request){
         String accessToken = jwtTokenUtil.resolveAccessToken(request);

@@ -9,7 +9,6 @@ import Graduated.Task.C2C.core.ErrorMessage;
 import Graduated.Task.C2C.core.JwtTokenUtil;
 import Graduated.Task.C2C.core.Message;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +64,7 @@ public class itemController {
         String accessToken = jwtTokenUtil.resolveAccessToken(request);
         String userId = jwtTokenUtil.getclaims(accessToken).getSubject();
         try{
-            Long itemNo = itemService.addItem(joinItemDto.getItemName(), joinItemDto.getImages(), joinItemDto.getPrice(), userId, joinItemDto.getCategoryNo(), joinItemDto.getItemState(),
+            Long itemNo = itemService.addItem(joinItemDto.getItemName(), joinItemDto.getImages(), joinItemDto.getPrice(), userId, joinItemDto.getCategory(), joinItemDto.getItemState(),
                     joinItemDto.isPriceSimilar());
             Message<itemRequestDto> message = Message.of(201,new itemRequestDto(itemNo,"상품이 성공적으로 등록되었습니다."));
             return new ResponseEntity<>(message,HttpStatus.CREATED);
@@ -82,8 +81,9 @@ public class itemController {
     @PatchMapping("/item/patch/{itemNo}")
     public ResponseEntity<?> changeItem(@PathVariable("itemNo") Long itemNo, @RequestBody joinItemDto joinItemDto,HttpServletRequest request){
         try{
-            itemService.changeItem(itemNo, joinItemDto.getItemName(), joinItemDto.getPrice(), joinItemDto.getCategoryNo(), joinItemDto.getItemState(),
+            itemService.changeItem(itemNo, joinItemDto.getItemName(), joinItemDto.getPrice(), joinItemDto.getCategory(), joinItemDto.getItemState(),
                     joinItemDto.isPriceSimilar());
+
             Message<itemRequestDto> message = Message.of(200,new itemRequestDto(itemNo,"상품이 성공적으로 수정되었습니다."));
             return new ResponseEntity<>(message,HttpStatus.OK);
         }

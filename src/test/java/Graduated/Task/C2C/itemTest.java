@@ -14,8 +14,11 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.zeroturnaround.exec.ProcessExecutor;
+import org.zeroturnaround.exec.ProcessResult;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 @SpringBootTest
 class itemTest {
@@ -43,7 +46,7 @@ class itemTest {
 		Category category = new Category("test",0);
 		categoryRepository.save(category);
 		em.clear();
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
+		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
 		System.out.println(l);
 	}
 	@Test
@@ -52,7 +55,7 @@ class itemTest {
 		userRepository.save(user);
 		Category category = new Category("test",0);
 		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
+		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
 		em.clear();
 		itemService.deleteItem(l);
 	}
@@ -63,9 +66,9 @@ class itemTest {
 		userRepository.save(user);
 		Category category = new Category("test",0);
 		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
+		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
 		em.clear();
-		itemService.changeItem(l,"2",4000, category.getNo(), 3,true);
+		itemService.changeItem(l,"2",4000, category.getName(), 3,true);
 	}
 
 	@Test
@@ -74,7 +77,7 @@ class itemTest {
 		userRepository.save(user);
 		Category category = new Category("test",0);
 		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
+		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
 		em.clear();
 		List<ItemDto> itemDtos = itemService.viewCategoryItem(l, 0, 10);
 		System.out.println(itemDtos);
@@ -85,7 +88,7 @@ class itemTest {
 		userRepository.save(user);
 		Category category = new Category("test",0);
 		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
+		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
 		em.clear();
 		List<ItemDto> itemDtos = itemService.searchItem("1", 0, 10);
 		System.out.println(itemDtos);
@@ -97,7 +100,7 @@ class itemTest {
 		userRepository.save(user);
 		Category category = new Category("test",0);
 		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
+		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
 		em.clear();
 		List<ItemDto> itemDetailDto = itemService.findPopularItem();
 		System.out.println(itemDetailDto);
@@ -109,7 +112,7 @@ class itemTest {
 		userRepository.save(user);
 		Category category = new Category("test",0);
 		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
+		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
 		em.clear();
 		categoryRepository.findAllPost();
 		List<ItemDto> itemDetailDto = itemService.findRecentItem();
@@ -117,17 +120,12 @@ class itemTest {
 	}
 	@Test
 	void Iteminfo() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getNo(), 2, true);
-		em.clear();
-		categoryRepository.findAllPost();
-		ItemDetailDto itemDetailDto = itemService.itemInformation(l);
+		ItemDetailDto itemDetailDto = itemService.itemInformation(1L);
 		System.out.println(itemDetailDto);
 	}
-
-
+	@Test
+	void categoryPrice() throws Exception {
+		System.out.println(categoryService.findCategoryPrice("test",1));
+	}
 }
 
