@@ -11,7 +11,7 @@ public class joinItemDto {
     private String images;
     private String itemName;
     private int price;
-    private Long categoryNo;
+    private String category;
     private int itemState;
     private boolean priceSimilar;
 

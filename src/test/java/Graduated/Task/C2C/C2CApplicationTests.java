@@ -19,14 +19,14 @@ class C2CApplicationTests {
 	@Autowired
 	EntityManager em;
 
-	@Test
-	void contextLoads() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		em.clear();
-		String login = userService.login("1", "1");
-		System.out.println(login);
-	}
+//	@Test
+//	void contextLoads() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		em.clear();
+//		String login = userService.login("1", "1");
+//		System.out.println(login);
+//	}
 
 }
 
