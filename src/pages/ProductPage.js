@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-// import sampleData from '../dummy'; 
+import sampleData from '../dummy'; 
 import './ProductPage.css'; 
 import Menu from '../components/Menu';
 import RecommendedPrice from '../components/RecommendedPrice';
@@ -9,31 +9,31 @@ import CheckImg from '../images/check.png';
 import ChatImage from '../images/Chat.svg';
 import ListImage from '../images/List.svg';
 import WishImage from '../images/Wish.svg';
-import axios from 'axios';
-// import sampleDataLatest from '../dummy_latest';
+// import axios from 'axios';
+import sampleDataLatest from '../dummy_latest';
 
 const ProductPage = () => {
   const { id } = useParams(); 
-  // const product = sampleData.find(item => item.id === parseInt(id)) || sampleDataLatest.find(item => item.id === parseInt(id)); 
+  const product = sampleData.find(item => item.itemId === parseInt(id)) || sampleDataLatest.find(item => item.itemId === parseInt(id)); 
   // const [searchQuery, setSearchQuery] = useState("");
-  const [product, setProduct] = useState(null);
+  // const [product, setProduct] = useState(null);
   const [category, setCategory] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    axios.get(`http://43.202.46.29:8080/products/${id}`)
-      .then(response => {
-        if (response.data.resultCode === 200) {
-          setProduct(response.data.data); // 데이터가 있는 경우
-        } else {
-          console.error('Unexpected resultCode:', response.data.resultCode);
-        }
-      })
-      .catch(error => {
-        console.error("Error fetching product data:", error);
-      });
-  }, [id]);
+  // useEffect(() => {
+  //   axios.get(`http://43.202.46.29:8080/products/${itemId}`)
+  //     .then(response => {
+  //       if (response.data.resultCode === 200) {
+  //         setProduct(response.data.data); // 데이터가 있는 경우
+  //       } else {
+  //         console.error('Unexpected resultCode:', response.data.resultCode);
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error("Error fetching product data:", error);
+  //     });
+  // }, [id]);
 
   if (!product) {
     return <div>상품을 찾을 수 없습니다.</div>;
@@ -109,13 +109,13 @@ const ProductPage = () => {
 
       <div className="product-details">
         <div className="product-image">
-          <img src={product.imageUrl} alt={product.title} />
+          <img src={product.image} alt={product.itemName} />
         </div>
         <div className="product-info">
           <div className="product-category">
             <div className="category-name">{product.category || '일반'}</div>
             <div className="product-title">
-              {product.title} {product.isPriceSimilar ? <img src={CheckImg} alt="아이콘" className="emoty"/> : ""}
+              {product.itemName} {product.priceSimilar ? <img src={CheckImg} alt="아이콘" className="emoty"/> : ""}
             </div>
           </div>
           <div className="product-string">
@@ -124,8 +124,8 @@ const ProductPage = () => {
           <div className="product-state"> 상태 : {stateDescriptions[product.itemState]} </div> 
           <div className="graph">추천 가격 범위</div>
           <RecommendedPrice 
-            minPrice={product.recommendedMinPrice} 
-            maxPrice={product.recommendedMaxPrice} 
+            minPrice={product.minPrice} 
+            maxPrice={product.maxPrice} 
             currentPrice={product.price}
           />
           <div className="button-row">

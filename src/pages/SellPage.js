@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import sampleData from '../dummy'; 
-// import sampleDataLatest from '../dummy_latest';
+import sampleData from '../dummy'; 
+import sampleDataLatest from '../dummy_latest';
 import Menu from '../components/Menu';
 import Logo from '../images/logo.png';
 import RecommendedPrice from '../components/RecommendedPrice';
 import CategorySelector from '../components/CategorySelector';
 import './SellPage.css';
+// import axios from 'axios';
 
 const SellPage = () => {
   const [image, setImage] = useState(null);
@@ -39,70 +40,70 @@ const SellPage = () => {
     }
   }
 
-  const updateRecommendedPrice = async () => {
-    const itemStateValue = getItemStateValue(productCondition);
-    console.log('item state value: ', itemStateValue);
-  
-    try {
-      const response = await fetch(`http://43.202.46.29:8080/recommended-price`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          category: category.major,
-          itemState: itemStateValue,
-        }),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
-      const data = await response.json();
-      console.log('Recommended Price Data:', data);
-  
-      if (data.resultCode === 200 && data.data) {
-        const newRecommendedPrice = {
-          min: data.data.recommendedMinPrice,
-          max: data.data.recommendedMaxPrice,
-        };
-        setRecommendedPrice(newRecommendedPrice);
-        setPriceWarning('');
-      } else {
-        setRecommendedPrice({ min: 0, max: 0 });
-        setPriceWarning('추천 가격 정보 없음');
-      }
-    } catch (error) {
-      console.error('Error fetching recommended price:', error);
-      setRecommendedPrice({ min: 0, max: 0 });
-      setPriceWarning('추천 가격 정보를 가져오는 데 실패했습니다.');
-    }
-  };
-  
-
-  // const updateRecommendedPrice = () => {
+  // const updateRecommendedPrice = async () => {
   //   const itemStateValue = getItemStateValue(productCondition);
   //   console.log('item state value: ', itemStateValue);
-
-  //   const foundProduct = sampleData.find(item => 
-  //     item.category === category.major && 
-  //     item.itemState === getItemStateValue(productCondition)
-  //   );
-  //   console.log('Found Product : ', foundProduct);
-
-  //   if (foundProduct) {
-  //     const newRecommendedPrice = {
-  //       min: foundProduct.recommendedMinPrice,
-  //       max: foundProduct.recommendedMaxPrice,
-  //     };
-  //     setRecommendedPrice(newRecommendedPrice);
-  //     setPriceWarning(''); 
-  //   } else {
+  
+  //   try {
+  //     const response = await fetch(`http://43.202.46.29:8080/recommended-price`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         category: category.major,
+  //         itemState: itemStateValue,
+  //       }),
+  //     });
+  
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  
+  //     const data = await response.json();
+  //     console.log('Recommended Price Data:', data);
+  
+  //     if (data.resultCode === 200 && data.data) {
+  //       const newRecommendedPrice = {
+  //         min: data.data.minPrice,
+  //         max: data.data.maxPrice,
+  //       };
+  //       setRecommendedPrice(newRecommendedPrice);
+  //       setPriceWarning('');
+  //     } else {
+  //       setRecommendedPrice({ min: 0, max: 0 });
+  //       setPriceWarning('추천 가격 정보 없음');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching recommended price:', error);
   //     setRecommendedPrice({ min: 0, max: 0 });
-  //     setPriceWarning('추천 가격 정보 없음');
+  //     setPriceWarning('추천 가격 정보를 가져오는 데 실패했습니다.');
   //   }
   // };
+  
+
+  const updateRecommendedPrice = () => {
+    const itemStateValue = getItemStateValue(productCondition);
+    console.log('item state value: ', itemStateValue);
+
+    const foundProduct = sampleData.find(item => 
+      item.category === category.major && 
+      item.itemState === getItemStateValue(productCondition)
+    );
+    console.log('Found Product : ', foundProduct);
+
+    if (foundProduct) {
+      const newRecommendedPrice = {
+        min: foundProduct.minPrice,
+        max: foundProduct.maxPrice,
+      };
+      setRecommendedPrice(newRecommendedPrice);
+      setPriceWarning(''); 
+    } else {
+      setRecommendedPrice({ min: 0, max: 0 });
+      setPriceWarning('추천 가격 정보 없음');
+    }
+  };
 
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);

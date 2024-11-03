@@ -34,19 +34,19 @@
   color: #ddd; 
 }
 
-.MuiSlider-mark[data-out-of-range="false"] {
+/* .MuiSlider-mark[data-out-of-range="false"] {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: blue;
+  background-color: blue !important;
 }
 
 .MuiSlider-mark[data-out-of-range="true"] {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: red;
-}
+  background-color: red !important;
+} */
 
 /* .recommended-price .MuiSlider-mark {
   width: 15px;  

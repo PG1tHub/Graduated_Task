@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import './RecommendedPrice.css';
 
+
 const RecommendedPrice = ({ minPrice, maxPrice, currentPrice }) => {
   const [value, setValue] = useState([minPrice, maxPrice]);
 
@@ -18,13 +19,21 @@ const RecommendedPrice = ({ minPrice, maxPrice, currentPrice }) => {
   const marks = [
     {
       value: minPrice,
+      style: { backgroundColor: 'blue', width: 15, height: 15, borderRadius: '50%' },
     },
     {
       value: currentPrice,
       label: `${currentPrice.toLocaleString()}원`,
+      style: {
+        backgroundColor: isOutofRange ? 'red' : 'blue',
+        width: 15,
+        height: 15,
+        borderRadius: '50%',
+      },
     },
     {
       value: maxPrice,
+      style: { backgroundColor: 'blue', width: 15, height: 15, borderRadius: '50%' },
     },
   ];
 
@@ -50,9 +59,26 @@ const RecommendedPrice = ({ minPrice, maxPrice, currentPrice }) => {
         valueLabelDisplay="auto"
         min={minPrice}
         max={isOutofRange ? (currentPrice > maxPrice ? currentPrice : currentPrice) : maxPrice}
-        step={1000}  
-        marks={marks}
+        step={null}  
+        marks={[
+          {
+            value: currentPrice,
+            label: `${currentPrice.toLocaleString()}원`,
+            'data-value': {currentPrice},  
+          },
+        ]}
         disabled
+        sx={{
+          '& .MuiSlider-mark': {
+            width: 15,
+            height: 15,
+            borderRadius: '50%',
+            backgroundColor: '#8cbfe8', 
+          },
+          '& .MuiSlider-mark[data-value={currentPrice}]': {
+            backgroundColor: isOutofRange ? 'red' : 'blue', 
+          },
+        }}
       />
       <div className="price-range">
         <span>{value[0].toLocaleString()}원</span>  

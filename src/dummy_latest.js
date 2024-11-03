@@ -7,82 +7,82 @@ import IPhoneImage from './images/iphone.png';
 
 const sampleDataLatest = [
   {
-    "id": 11,
-    "title": "에어팟 프로 2세대",
+    "itemId": 11,
+    "itemName": "에어팟 프로 2세대",
     "price": 450000,
-    "imageUrl": AirPodsPro2Image,
-    "createdAt": "4분 전",
+    "image": AirPodsPro2Image,
+    "time": "4분 전",
     "category": "웨어러블",
-    "isPriceSimilar": false,
+    "priceSimilar": false,
     "itemState": 4,
-    "recommendedMinPrice": 320000,
-    "recommendedMaxPrice": 380000
+    "minPrice": 320000,
+    "maxPrice": 380000
   },
   
   {
-    "id": 12,
-    "title": "아이폰 13",
+    "itemId": 12,
+    "itemName": "아이폰 13",
     "price": 950000,
-    "imageUrl": IphoneImage,
-    "createdAt": "10분 전",
+    "image": IphoneImage,
+    "time": "10분 전",
     "category": "휴대폰",
-    "isPriceSimilar": true,
+    "priceSimilar": true,
     "itemState": 5,
-    "recommendedMinPrice": 880000,
-    "recommendedMaxPrice": 1020000
+    "minPrice": 880000,
+    "maxPrice": 1020000
   },
 
   {
-    "id": 13,
-    "title": "아이폰 13",
+    "itemId": 13,
+    "itemName": "아이폰 13",
     "price": 850000,
-    "imageUrl": IPhoneImage,
-    "createdAt": "32분 전",
+    "image": IPhoneImage,
+    "time": "32분 전",
     "category": "휴대폰",
-    "isPriceSimilar": false,
+    "priceSimilar": false,
     "itemState": 3,
-    "recommendedMinPrice": 700000,
-    "recommendedMaxPrice": 800000
+    "minPrice": 700000,
+    "maxPrice": 800000
   },
 
   {
-    "id": 14,
-    "title": "맥북 프로 16인치",
+    "itemId": 14,
+    "itemName": "맥북 프로 16인치",
     "price": 2400000,
-    "imageUrl": MacBookProImage,
-    "createdAt": "35분 전",
+    "image": MacBookProImage,
+    "time": "35분 전",
     "category": "노트북",
-    "isPriceSimilar": true,
+    "priceSimilar": true,
     "itemState": 5,
-    "recommendedMinPrice": 2200000,
-    "recommendedMaxPrice": 2600000
+    "minPrice": 2200000,
+    "maxPrice": 2600000
   },
   
   {
-    "id": 15,
-    "title": "닌텐도 스위치",
+    "itemId": 15,
+    "itemName": "닌텐도 스위치",
     "price": 440000,
-    "imageUrl": SwitchImage,
-    "createdAt": "1시간 전",
+    "image": SwitchImage,
+    "time": "1시간 전",
     "category": "게임",
-    "isPriceSimilar": false,
+    "priceSimilar": false,
     "itemState": 4,
-    "recommendedMinPrice": 320000,
-    "recommendedMaxPrice": 380000
+    "minPrice": 320000,
+    "maxPrice": 380000
   },
   
 
   {
-    "id": 16,
-    "title": "아이폰 14 프로",
+    "itemId": 16,
+    "itemName": "아이폰 14 프로",
     "price": 1400000,
-    "imageUrl": Iphone14ProImage,
-    "createdAt": "1시간 전",
+    "image": Iphone14ProImage,
+    "time": "1시간 전",
     "category": "휴대폰",
-    "isPriceSimilar": false,
+    "priceSimilar": false,
     "itemState": 3,
-    "recommendedMinPrice": 1000000,
-    "recommendedMaxPrice": 1200000
+    "minPrice": 1000000,
+    "maxPrice": 1200000
   }
 
 
