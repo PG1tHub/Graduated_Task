@@ -27,7 +27,7 @@ const Main = () => {
   // }, []);
 
   useEffect(() => {
-    axios.get('http://ec2-13-124-198-150.ap-northeast-2.compute.amazonaws.com:8080/main')
+    axios.get('http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com:8080/main')
     .then(response => {
       console.log('API호출 성공');
       console.log(response);  // 전체 응답 객체를 출력하여 데이터 구조와 상태를 확인

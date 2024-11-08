@@ -2,35 +2,29 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../images/logo.png';
 import './LoginPage.css';
-import Cookies from 'js-cookie';
+
 
 function LoginPage({ setIsLoggedIn }) {
-  const [username, setUsername] = useState('');
+  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    // if(username === 'testuser' && password === 'testpass') {
-    //   alert ('로그인 성공');
-    //   setIsLoggedIn(true);
-    //   navigate('/');
-    // } else {
-    //   alert ('아이디나 비밀번호를 확인하세요.');
-    // }
     try {
-      const response = await fetch('http://43.202.46.29:8080/login', {
+      const response = await fetch('http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com:8080/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ id, password }),
       });
       const data = await response.json();
       
       if (response.ok) {
         // JWT 쿠키 설정
-        Cookies.set('authToken', data.accessToken, { secure: true, sameSite: 'Strict' });
-
+        sessionStorage.setItem('Authorization',data.accessToken);
+        // navigate('/', { state: { Authorization: data.accessToken } });
+        //localStorage.set('Authorization', 'Bearer ' + data.accessToken, { secure: true, sameSite: 'Strict' });
         setIsLoggedIn(true);
         navigate('/');
       } else {
@@ -54,9 +48,9 @@ function LoginPage({ setIsLoggedIn }) {
       <div>
         <input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="id"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
         />
         <input
           type="password"

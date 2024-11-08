@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import './RecommendedPrice.css';
 
-const RecommendedPrice = ({ minPrice, maxPrice, currentPrice }) => {
+const RecommendedPrice = ({ minPrice = 0, maxPrice = 0, currentPrice = 0 }) => {
   const [value, setValue] = useState([minPrice, maxPrice]);
 
   useEffect(() => {

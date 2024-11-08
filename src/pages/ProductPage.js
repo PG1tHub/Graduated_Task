@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import sampleData from '../dummy'; 
+// import sampleData from '../dummy'; 
 import './ProductPage.css'; 
 import Menu from '../components/Menu';
 import RecommendedPrice from '../components/RecommendedPrice';
@@ -9,43 +9,39 @@ import CheckImg from '../images/check.png';
 import ChatImage from '../images/Chat.svg';
 import ListImage from '../images/List.svg';
 import WishImage from '../images/Wish.svg';
-// import axios from 'axios';
-import sampleDataLatest from '../dummy_latest';
+import axios from 'axios';
+// import sampleDataLatest from '../dummy_latest';
 
 const ProductPage = () => {
   const { id } = useParams(); 
-  const numericId = parseInt(id, 10);
-  if (isNaN(numericId)) {
+  const itemId = parseInt(id, 10);
+  if (isNaN(itemId)) {
     console.warn('유효하지 않은 ID:', id);
   }
-  const product = sampleData.find(item => item.itemId === numericId) || sampleDataLatest.find(item => item.itemId === numericId); 
+  // const product = sampleData.find(item => item.itemId === numericId) || sampleDataLatest.find(item => item.itemId === numericId); 
   // const [searchQuery, setSearchQuery] = useState("");
-  // const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState(null);
   const [category, setCategory] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // useEffect(() => {
-  //   axios.get(`http://43.202.46.29:8080/products/${itemId}`)
-  //     .then(response => {
-  //       if (response.data.resultCode === 200) {
-  //         setProduct(response.data.data); // 데이터가 있는 경우
-  //       } else {
-  //         console.error('Unexpected resultCode:', response.data.resultCode);
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching product data:", error);
-  //     });
-  // }, [id]);
+  useEffect(() => {
+    axios.get(`http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com:8080/itemInfo/${itemId}`)
+      .then(response => {
+        if (response.data.resultCode === 200) {
+          setProduct(response.data.data); // 데이터가 있는 경우
+        } else {
+          console.error('Unexpected resultCode:', response.data.resultCode);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching product data:", error);
+      });
+  }, [itemId]);
 
   if (!product) {
     return <div>상품을 찾을 수 없습니다.</div>;
   }
-
-  // const handleSearch = (e) => {
-  //   setSearchQuery(e.target.value);
-  // };
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.innerText);
@@ -72,19 +68,6 @@ const ProductPage = () => {
 if (typeof productState !== 'number') {
   console.warn('itemState는 숫자여야 합니다:', productState);
 }
-
-  // const handleLogin = () => {
-  //   setIsLoggedIn(true);
-  // };
-
-  // const handleMyPageClick = () => {
-  //   if (!isLoggedIn) {
-  //     handleLogin();
-  //   } else {
-  //     console.log("마이페이지 이동");
-  //   }
-  // };
-
 
 
   return (

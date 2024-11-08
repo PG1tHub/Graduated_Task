@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { divnk } from 'react-router-dom';
-import sampleData from '../dummy'; 
-import sampleDataLatest from '../dummy_latest';
+// import { Link } from 'react-router-dom';
+// import sampleData from '../dummy'; 
+// import sampleDataLatest from '../dummy_latest';
 import Menu from '../components/Menu';
 import Logo from '../images/logo.png';
 import RecommendedPrice from '../components/RecommendedPrice';
@@ -10,19 +10,19 @@ import './SellPage.css';
 // import axios from 'axios';
 
 const SellPage = () => {
-  const [image, setImage] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
-  const [productName, setProductName] = useState('');
+  const [images, setImages] = useState('');
+  const [imageFile, setImageFile] = useState('');
+  const [itemName, setItemName] = useState('');
   const [category, setCategory] = useState({
     major: '',
     middle: '',
     minor: ''
   });
-  const [productCondition, setProductCondition] = useState('새 상품');
-  const [currentPrice, setCurrentPrice] = useState(''); 
+  const [itemState, setItemState] = useState('새 상품');
+  const [price, setPrice] = useState(0); 
+  const [priceSimilar, setPriceSimilar] = useState(false);
   const [priceWarning, setPriceWarning] = useState(''); 
   const [recommendedPrice, setRecommendedPrice] = useState({ min: 0, max: 0 });
-
   const getItemStateValue = (condition) => {
     switch (condition) {
       case '새 상품' :
@@ -39,71 +39,71 @@ const SellPage = () => {
         return 0;
     }
   }
+  
+    // const updateRecommendedPrice = () => {
+    //   const itemStateValue = getItemStateValue(itemState);
+    //   console.log('item state value: ', itemStateValue);
+  
+    //   const foundProduct = sampleData.find(item => 
+    //     item.category === category.major && 
+    //     item.itemState === getItemStateValue(itemState)
+    //   );
+    //   console.log('Found Product : ', foundProduct);
+  
+    //   if (foundProduct) {
+    //     const newRecommendedPrice = {
+    //       min: foundProduct.minPrice,
+    //       max: foundProduct.maxPrice,
+    //     };
+    //     setRecommendedPrice(newRecommendedPrice);
+    //     setPriceWarning(''); 
+    //   } else {
+    //     setRecommendedPrice({ min: 0, max: 0 });
+    //     setPriceWarning('추천 가격 정보 없음');
+    //   }
+    // };
 
-  // const updateRecommendedPrice = async () => {
-  //   const itemStateValue = getItemStateValue(productCondition);
-  //   console.log('item state value: ', itemStateValue);
-  
-  //   try {
-  //     const response = await fetch(`http://43.202.46.29:8080/recommended-price`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'appdivcation/json',
-  //       },
-  //       body: JSON.stringify({
-  //         category: category.major,
-  //         itemState: itemStateValue,
-  //       }),
-  //     });
-  
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-  
-  //     const data = await response.json();
-  //     console.log('Recommended Price Data:', data);
-  
-  //     if (data.resultCode === 200 && data.data) {
-  //       const newRecommendedPrice = {
-  //         min: data.data.minPrice,
-  //         max: data.data.maxPrice,
-  //       };
-  //       setRecommendedPrice(newRecommendedPrice);
-  //       setPriceWarning('');
-  //     } else {
-  //       setRecommendedPrice({ min: 0, max: 0 });
-  //       setPriceWarning('추천 가격 정보 없음');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching recommended price:', error);
-  //     setRecommendedPrice({ min: 0, max: 0 });
-  //     setPriceWarning('추천 가격 정보를 가져오는 데 실패했습니다.');
-  //   }
-  // };
-  
-
-  const updateRecommendedPrice = () => {
-    const itemStateValue = getItemStateValue(productCondition);
+  const updateRecommendedPrice = async () => {
+    const itemStateValue = getItemStateValue(itemState);
     console.log('item state value: ', itemStateValue);
-
-    const foundProduct = sampleData.find(item => 
-      item.category === category.major && 
-      item.itemState === getItemStateValue(productCondition)
-    );
-    console.log('Found Product : ', foundProduct);
-
-    if (foundProduct) {
-      const newRecommendedPrice = {
-        min: foundProduct.minPrice,
-        max: foundProduct.maxPrice,
-      };
-      setRecommendedPrice(newRecommendedPrice);
-      setPriceWarning(''); 
-    } else {
+  
+    try {
+      const response = await fetch(`http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com:8080/recommended-price`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+        body: JSON.stringify({
+          category: category.minor,
+          itemState: itemStateValue,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Recommended Price Data:', data);
+  
+      if (data.resultCode === 200 && data.data) {
+        const newRecommendedPrice = {
+          min: data.data.minPrice,
+          max: data.data.maxPrice,
+        };
+        setRecommendedPrice(newRecommendedPrice);
+        setPriceWarning('');
+      } else {
+        setRecommendedPrice({ min: 0, max: 0 });
+        setPriceWarning('추천 가격 정보 없음');
+      }
+    } catch (error) {
+      console.error('Error fetching recommended price:', error);
       setRecommendedPrice({ min: 0, max: 0 });
-      setPriceWarning('추천 가격 정보 없음');
+      setPriceWarning('추천 가격 정보를 가져오는 데 실패했습니다.');
     }
   };
+  
 
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
@@ -111,23 +111,48 @@ const SellPage = () => {
   };
 
   const handleConditionChange = (e) => {
-    setProductCondition(e.target.value);
+    setItemState(e.target.value);
   }
 
   useEffect(() => {
     updateRecommendedPrice();
-  }, [productCondition, category]);
+  }, [itemState, category]);
 
   useEffect(() => {
-    setProductName('');
+    setItemName('');
   }, []);
+
+  useEffect(() => {
+    // 데이터 fetching 예시
+    const fetchData = async () => {
+      const response = await fetch('API_URL');
+      const data = await response.json();
+      
+      // 상태 업데이트
+      setRecommendedPrice({
+        min: data.recommendedMinPrice,
+        max: data.recommendedMaxPrice
+      });
+    };
+  
+    fetchData();
+  }, []); // 빈 배열을 넣으면 컴포넌트가 마운트될 때만 실행됩니다.
+
+  useEffect(() => {
+    // price가 recommendedPrice의 min과 max 범위 안에 있는지 확인
+    if (price >= recommendedPrice.min && price <= recommendedPrice.max) {
+      setPriceSimilar(true);
+    } else {
+      setPriceSimilar(false);
+    }
+  }, [price, recommendedPrice]); // price와 recommendedPrice가 변경될 때마다 실행
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if(file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result);
+        setImages(reader.result);
         setImageFile(file);
       };
       reader.readAsDataURL(file);
@@ -135,14 +160,14 @@ const SellPage = () => {
   };
 
   const handleImageRemove = () => {
-    setImage(null);
+    setImages(null);
     setImageFile(null);
   }
 
 
   const handlePriceChange = (e) => {
     const value = e.target.value;
-    setCurrentPrice(value);
+    setPrice(value);
 
     if (value < recommendedPrice.min || value > recommendedPrice.max) {
       setPriceWarning('가격 추천 범위 밖입니다.');
@@ -155,17 +180,34 @@ const SellPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    const formData = new FormData();
-    formData.append('image', imageFile);
-    formData.append('productName', productName);
-    formData.append('category', JSON.stringify(category));
-    formData.append('productCondition', productCondition);
-    formData.append('currentPrice', currentPrice);
+    // formData.append('image', imageFile);
+    // formData.append('category', 'AirPods Pro 2');
+    // const formData = new FormData();
+    // formData.append('images', '');
+    // formData.append('itemName', itemName);
+    // formData.append('category', JSON.stringify(category));
+    // formData.append('itemState', itemState);
+    // formData.append('price', price);
+    // formData.append('priceSimilar', priceSimilar);
+    // console.log(formData);
+    const token = sessionStorage.getItem('Authorization');
 
     try {
-      const response = await fetch('http://43.202.46.29:8080/upload', {
+      const response = await fetch('http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com/item/create', {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify({
+          images: images,
+          itemName: itemName,
+          price: price,
+          category: category,
+          itemState: itemState,
+          priceSimilar: priceSimilar
+        }),
+        
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          // 'Content-Type': 'application/json;charset=UTF-8',
+        },
       });
 
       if(!response.ok){
@@ -189,12 +231,12 @@ const SellPage = () => {
       </header>
     
       <div className="Write">
-        {/* <form onSubmit={handleSubmit}> */}
-        <form>
+        <form onSubmit={handleSubmit}>
+        {/* <form> */}
           <label className="image-upload">
-            {image ? (
+            {images ? (
               <div className="image-preview-container">
-                <img src={image} alt="미리보기" className="image-preview" />
+                <img src={images} alt="미리보기" className="image-preview" />
                 <button type="button" className="remove-button" onCdivck={handleImageRemove}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Zm-1-13h2v6h-2V7Zm0 8h2v2h-2v-2Z" />
@@ -212,15 +254,15 @@ const SellPage = () => {
             />
           </label>
 
-          <div className="productName">상품명</div>
+          <div className="itemName">상품명</div>
           <input
             type="text"
-            id="productName"
+            id="itemName"
             className="itemName"
-            value={productName}
+            value={itemName}
             placeholder="상품명을 입력하세요"
             required 
-            onChange={(e) => setProductName(e.target.value)}
+            onChange={(e) => setItemName(e.target.value)}
             autoComplete='off'
           />
           <CategorySelector category={category} setCategory={handleCategoryChange} />
@@ -230,7 +272,7 @@ const SellPage = () => {
               <input 
                 type="radio" 
                 value="새 상품" 
-                checked={productCondition === '새 상품'}
+                checked={itemState === '새 상품'}
                 onChange={handleConditionChange} 
                 id='new'
               />
@@ -241,7 +283,7 @@ const SellPage = () => {
               <input 
                 type="radio" 
                 value="사용감 적음" 
-                checked={productCondition === '사용감 적음'}
+                checked={itemState === '사용감 적음'}
                 onChange={handleConditionChange} 
                 id='light-used' 
               />
@@ -252,7 +294,7 @@ const SellPage = () => {
               <input 
                 type="radio" 
                 value="사용감 많음" 
-                checked={productCondition === '사용감 많음'} 
+                checked={itemState === '사용감 많음'} 
                 onChange={handleConditionChange}
                 id='heavy-used'
               />
@@ -263,7 +305,7 @@ const SellPage = () => {
               <input 
                 type="radio" 
                 value="중고" 
-                checked={productCondition === '중고'}
+                checked={itemState === '중고'}
                 onChange={handleConditionChange} 
                 id='used' 
               />
@@ -274,7 +316,7 @@ const SellPage = () => {
               <input 
                 type="radio" 
                 value="고장/파손" 
-                checked={productCondition === '고장/파손'} 
+                checked={itemState === '고장/파손'} 
                 onChange={handleConditionChange}
                 id='broken'
               />
@@ -285,13 +327,13 @@ const SellPage = () => {
           <RecommendedPrice 
             minPrice={recommendedPrice.min} 
             maxPrice={recommendedPrice.max} 
-            currentPrice={Number(currentPrice)}
+            price={Number(price)}
             className='graph'
           />
           <div className='productPrice'>가격</div>
           <input
             type="number"
-            value={currentPrice}
+            value={price}
             onChange={handlePriceChange}
             className='price'
             placeholder="가격을 입력하세요"

@@ -3,6 +3,9 @@ import './ProductCard.css';
 import CheckImg from '../images/check.png';
 
 const ProductCard = ({ product }) => {
+  // time을 '년도-월-일' 형태로 포맷
+  const formattedDate = new Date(product.time).toISOString().slice(0, 10);
+  
   return (
     <div className="product-card">
       <img src={product.image} alt={product.itemName} className="products-image" />
@@ -12,7 +15,7 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="price">{product.price.toLocaleString()}원</div>
         <div className="description">{product.description}</div>
-        <p className="product-date">{product.time}</p>
+        <p className="product-date">{formattedDate}</p>
       </div>
     </div>
   );

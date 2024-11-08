@@ -15,6 +15,7 @@ const CategorySelector = ({ category, setCategory }) => {
           className="category-select"
         >
           <option value="">카테고리 선택</option>
+          {/* <option value="휴대폰">휴대폰</option> */}
           <option value="휴대폰">휴대폰</option>
           <option value="태블릿">태블릿</option>
           <option value="노트북">노트북</option>
@@ -46,6 +47,12 @@ const CategorySelector = ({ category, setCategory }) => {
                 <option value="갤럭시탭">갤럭시탭</option>
               </>
             )}
+            {category.major === "웨어러블" && (
+              <>
+                <option value="에어팟">에어팟</option>
+                <option value="버즈">버즈</option>
+              </>
+            )}
             {/* 다른 대분류에 따른 중분류 추가 */}
           </select>
         )}
@@ -72,6 +79,16 @@ const CategorySelector = ({ category, setCategory }) => {
               <>
                 <option value="갤럭시S10">갤럭시S10</option>
                 <option value="Z플립">Z플립</option>
+              </>
+            )}
+            {category.middle === "에어팟" && (
+              <>
+                <option value="에어팟1">에어팟1</option>
+                <option value="에어팟2">에어팟2</option>
+                <option value="에어팟3">에어팟3</option>
+                <option value="에어팟 프로">에어팟 프로</option>
+                <option value="AirPods Pro 2">에어팟 프로2</option>
+                <option value="AirPods Max">에어팟 맥스</option>
               </>
             )}
             {/* 다른 중분류에 따른 소분류 추가 */}
