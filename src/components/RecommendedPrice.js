@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import './RecommendedPrice.css';
 
-
 const RecommendedPrice = ({ minPrice, maxPrice, currentPrice }) => {
   const [value, setValue] = useState([minPrice, maxPrice]);
 
@@ -19,21 +18,15 @@ const RecommendedPrice = ({ minPrice, maxPrice, currentPrice }) => {
   const marks = [
     {
       value: minPrice,
-      style: { backgroundColor: 'blue', width: 15, height: 15, borderRadius: '50%' },
+      label: `${minPrice.toLocaleString()}원`,
     },
     {
       value: currentPrice,
       label: `${currentPrice.toLocaleString()}원`,
-      style: {
-        backgroundColor: isOutofRange ? 'red' : 'blue',
-        width: 15,
-        height: 15,
-        borderRadius: '50%',
-      },
     },
     {
       value: maxPrice,
-      style: { backgroundColor: 'blue', width: 15, height: 15, borderRadius: '50%' },
+      label: `${maxPrice.toLocaleString()}원`,
     },
   ];
 
@@ -60,30 +53,14 @@ const RecommendedPrice = ({ minPrice, maxPrice, currentPrice }) => {
         min={minPrice}
         max={isOutofRange ? (currentPrice > maxPrice ? currentPrice : currentPrice) : maxPrice}
         step={null}  
-        marks={[
-          {
-            value: currentPrice,
-            label: `${currentPrice.toLocaleString()}원`,
-            'data-value': {currentPrice},  
-          },
-        ]}
+        marks={marks}
+        className={`recommended-price ${isOutofRange ? 'out-of-range' : ''}`}
         disabled
-        sx={{
-          '& .MuiSlider-mark': {
-            width: 15,
-            height: 15,
-            borderRadius: '50%',
-            backgroundColor: '#8cbfe8', 
-          },
-          '& .MuiSlider-mark[data-value={currentPrice}]': {
-            backgroundColor: isOutofRange ? 'red' : 'blue', 
-          },
-        }}
       />
-      <div className="price-range">
+      {/* <div className="price-range">
         <span>{value[0].toLocaleString()}원</span>  
         <span>{value[1].toLocaleString()}원</span>
-      </div>
+      </div> */}
     </div>
   );
 };

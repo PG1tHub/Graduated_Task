@@ -14,7 +14,11 @@ import sampleDataLatest from '../dummy_latest';
 
 const ProductPage = () => {
   const { id } = useParams(); 
-  const product = sampleData.find(item => item.itemId === parseInt(id)) || sampleDataLatest.find(item => item.itemId === parseInt(id)); 
+  const numericId = parseInt(id, 10);
+  if (isNaN(numericId)) {
+    console.warn('유효하지 않은 ID:', id);
+  }
+  const product = sampleData.find(item => item.itemId === numericId) || sampleDataLatest.find(item => item.itemId === numericId); 
   // const [searchQuery, setSearchQuery] = useState("");
   // const [product, setProduct] = useState(null);
   const [category, setCategory] = useState("");
@@ -64,6 +68,11 @@ const ProductPage = () => {
     5: "고장/파손"
   };
 
+  const productState = product.itemState; // itemState 값 확인
+if (typeof productState !== 'number') {
+  console.warn('itemState는 숫자여야 합니다:', productState);
+}
+
   // const handleLogin = () => {
   //   setIsLoggedIn(true);
   // };
@@ -93,7 +102,7 @@ const ProductPage = () => {
       >
         <div className="category-button">
           <img src={ListImage} alt="카테고리" className="categoryIcon"/>
-          <span class="category-text">카테고리 {category}</span>
+          <span className="category-text">카테고리 {category}</span>
         </div>
         {isDropdownOpen && (
           <ul className="dropdown-menu">
@@ -131,7 +140,7 @@ const ProductPage = () => {
           <div className="button-row">
             <img src={WishImage} alt="찜" className="wish-button" />
             <img src={ChatImage} alt="채팅" className="chatting-button" />
-            <button className="deal-button">거래하기</button>
+            <div className="deal-button">거래하기</div>
           </div>
         </div>
       </div>

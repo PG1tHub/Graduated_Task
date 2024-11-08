@@ -131,6 +131,54 @@
   margin: 0; /* 여백 제거 */
 }
 
+.productState {
+  margin: 20px 0;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio-group input[type="radio"] {
+  display: none; 
+}
+
+.radio-group label {
+  position: relative;
+  padding-left: 30px; 
+  cursor: pointer;
+  font-family: SUIT-Regular;
+  font-size: 16px;
+}
+
+.radio-group label::before {
+  content: '';
+  position: absolute;
+  left: 0; 
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px; 
+  height: 15px; 
+  border: 1px solid #333; 
+  border-radius: 50%; 
+  background-color: white; 
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.radio-group input[type="radio"]:checked + label::before {
+  background-color: #8cbfe8; 
+  border-color: #8cbfe8; 
+}
+
+.radio-group input[type="radio"]:checked + label {
+  font-weight: bold; 
+  font-family: SUIT-Regular;
+}
+
+
+
 /* .productState {
   margin-top: 40px;
 }

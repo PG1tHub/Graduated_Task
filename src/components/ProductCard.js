@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
       <img src={product.image} alt={product.itemName} className="products-image" />
       <div className="products">
         <div className="product-title">
-          {product.priceSimilar ? <img src={CheckImg} alt="웃음" className="emoty"/> : ""} {product.itemName}
+          {product.priceSimilar ? <img src={CheckImg} alt="범위추천" className="checkIcon"/> : ""} {product.itemName}
         </div>
         <div className="price">{product.price.toLocaleString()}원</div>
         <div className="description">{product.description}</div>

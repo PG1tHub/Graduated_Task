@@ -127,7 +127,7 @@ body {
   margin-top: 20px;
 }
 
-.wish-button, .chatting-button, .deal-button {
+.wish-button, .chatting-button {
   width: 130px;
   height: 40px;
   padding: 10px 25px;
@@ -141,6 +141,24 @@ body {
   position: relative;
   display: inline-block;
   margin: 15px;
+}
+
+.deal-button {
+  width: 130px;
+  height: 40px;
+  padding: 0px 25px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  font-family: SUIT-Regular;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  margin: 15px;
+  text-align: center; 
+  line-height: 40px; 
 }
 
 .product-state {

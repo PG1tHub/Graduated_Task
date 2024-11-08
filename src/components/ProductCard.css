@@ -40,13 +40,17 @@
   margin: 5px 0;
 }
 
-.product-title .emoty{
+.product-title .checkIcon{
   width: 15px;
   height: auto;
-  padding-top: 10px;
+  margin-right: 5px;
 }
 
 .products .product-title {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin-top: 15px;
   font-size: 16px;
   font-weight: 500;
 }
@@ -56,6 +60,7 @@
   font-size: 17px;
   margin: 0 auto;
   text-align: center;
+  border: none;
 }
 
 .products .description {

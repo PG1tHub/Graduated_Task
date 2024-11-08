@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { divnk } from 'react-router-dom';
 import sampleData from '../dummy'; 
 import sampleDataLatest from '../dummy_latest';
 import Menu from '../components/Menu';
@@ -48,7 +48,7 @@ const SellPage = () => {
   //     const response = await fetch(`http://43.202.46.29:8080/recommended-price`, {
   //       method: 'POST',
   //       headers: {
-  //         'Content-Type': 'application/json',
+  //         'Content-Type': 'appdivcation/json',
   //       },
   //       body: JSON.stringify({
   //         category: category.major,
@@ -182,20 +182,20 @@ const SellPage = () => {
   return (
     <div className="Sell">
       <header className="Sell-header">
-        <Link to="/">
+        <divnk to="/">
           <img src={Logo} alt="로고" className="logo" />
-        </Link>
+        </divnk>
         <Menu />
       </header>
     
       <div className="Write">
         {/* <form onSubmit={handleSubmit}> */}
         <form>
-        <label className="image-upload">
+          <label className="image-upload">
             {image ? (
               <div className="image-preview-container">
                 <img src={image} alt="미리보기" className="image-preview" />
-                <button type="button" className="remove-button" onClick={handleImageRemove}>
+                <button type="button" className="remove-button" onCdivck={handleImageRemove}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Zm-1-13h2v6h-2V7Zm0 8h2v2h-2v-2Z" />
                   </svg>
@@ -225,62 +225,62 @@ const SellPage = () => {
           />
           <CategorySelector category={category} setCategory={handleCategoryChange} />
           <div className='productState'>상품상태</div>
-            <ul>
-              <li>
+          <div>
+            <div className='radio-group'>
               <input 
                 type="radio" 
                 value="새 상품" 
                 checked={productCondition === '새 상품'}
                 onChange={handleConditionChange} 
+                id='new'
               />
-              <label>새 상품</label>
-              <div class="check"></div>
-              </li>
+              <label htmlFor='new'>새 상품</label>
+            </div>
         
-              <li>
+            <div className='radio-group'>
               <input 
                 type="radio" 
                 value="사용감 적음" 
                 checked={productCondition === '사용감 적음'}
-                onChange={handleConditionChange}  
+                onChange={handleConditionChange} 
+                id='light-used' 
               />
-              <label>사용감 적음</label>
-              <div class="check"></div>
-              </li>
+              <label htmlFor='light-used'>사용감 적음</label>
+            </div>
 
-              <li>
+            <div className='radio-group'>
               <input 
                 type="radio" 
                 value="사용감 많음" 
                 checked={productCondition === '사용감 많음'} 
                 onChange={handleConditionChange}
+                id='heavy-used'
               />
-              <label>사용감 많음</label>
-              <div class="check"></div>
-              </li>
+              <label htmlFor='heavy-used'>사용감 많음</label>
+            </div>
           
-              <li>
+            <div className='radio-group'>
               <input 
                 type="radio" 
                 value="중고" 
                 checked={productCondition === '중고'}
-                onChange={handleConditionChange}  
+                onChange={handleConditionChange} 
+                id='used' 
               />
-              <label>중고</label>
-              <div class="check"></div>
-              </li>
+              <label htmlFor='used'>중고</label>
+            </div>
             
-              <li>
+            <div className='radio-group'>
               <input 
                 type="radio" 
                 value="고장/파손" 
                 checked={productCondition === '고장/파손'} 
                 onChange={handleConditionChange}
+                id='broken'
               />
-              <label>고장/파손</label>
-              <div class="check"></div>
-              </li>
-            </ul>
+              <label htmlFor='broken'>고장/파손</label>
+            </div>
+          </div>
 
           <RecommendedPrice 
             minPrice={recommendedPrice.min} 
@@ -301,10 +301,8 @@ const SellPage = () => {
           {priceWarning && (
             <div style={{ color: 'red' }}>{priceWarning}</div> 
           )}
-          <div className='buttons'>
-            <button className='temporary'>임시저장</button>
+          {/* <div className='buttons'>저장</div> */}
             <button type="submit" className='buttonSubmit'>등록</button>   
-          </div>
         </form>  
       </div>
     </div>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Menu from '../components/Menu';
 import './Main.css';
 import Logo from '../images/logo.png';
-import sampleData from '../dummy';
-import sampleDataLatest from '../dummy_latest';
+// import sampleData from '../dummy';
+// import sampleDataLatest from '../dummy_latest';
 import MainImage from '../images/main.png';
 import ListImage from '../images/List.svg';
 
@@ -16,62 +16,62 @@ const Main = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("전체");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setProducts(sampleData);
-  }, []);
-
-  useEffect(() => {
-    setProductsLatest(sampleDataLatest);
-  }, []);
+  const [isLoading, setIsLoading] = useState(true);
 
   // useEffect(() => {
-  //   axios.get('http://43.202.46.29:8080/main')
-  //   .then(response => {
-  //     console.log('API호출 성공');
-  //     console.log(response);  // 전체 응답 객체를 출력하여 데이터 구조와 상태를 확인합니다.
-  //     console.log(response.data);  // 데이터 객체를 확인합니다
-  //     if(response.data.resultCode === 200) {
-  //       const popularItems = response.data.data.popularItems.map(item => ({
-  //         itemId: item.itemId, // id -> itemId
-  //         itemName: item.itemName, // title -> itemName
-  //         price: item.price,
-  //         image: item.image, // imageUrl -> image
-  //         time: item.time, // createdAt -> time
-  //         category: item.category?.categoryName,
-  //         priceSimilar: item.priceSimilar, // isPriceSimilar -> priceSimilar
-  //         itemState: item.itemState,
-  //         minPrice: item.minPrice, // recommendedMinPrice -> minPrice
-  //         maxPrice: item.maxPrice // recommendedMaxPrice -> maxPrice
-  //       }));
-        
-  //       const recentItems = response.data.data.recentItems.map(item => ({
-  //         itemId: item.itemId, // id -> itemId
-  //         itemName: item.itemName, // title -> itemName
-  //         price: item.price,
-  //         image: item.image, // imageUrl -> image
-  //         time: item.time, // createdAt -> time
-  //         category: item.category,
-  //         priceSimilar: item.priceSimilar, // isPriceSimilar -> priceSimilar
-  //         itemState: item.itemState,
-  //         minPrice: item.minPrice, // recommendedMinPrice -> minPrice
-  //         maxPrice: item.maxPrice // recommendedMaxPrice -> maxPrice
-  //       }));
-  
-  //       setProducts(popularItems);
-  //       setProductsLatest(recentItems);
-  //       setIsLoading(false);
-  //     } else {
-  //       console.error('Unexpected resultCode:', response.data.resultCode);
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error("Error fetching main page data:", error);
-  //     setIsLoading(false);
-  //   });
-
+  //   setProducts(sampleData);
   // }, []);
+
+  // useEffect(() => {
+  //   setProductsLatest(sampleDataLatest);
+  // }, []);
+
+  useEffect(() => {
+    axios.get('http://ec2-13-124-198-150.ap-northeast-2.compute.amazonaws.com:8080/main')
+    .then(response => {
+      console.log('API호출 성공');
+      console.log(response);  // 전체 응답 객체를 출력하여 데이터 구조와 상태를 확인
+      console.log(response.data);  // 데이터 객체를 확인
+      if(response.data.resultCode === 200) {
+        const popularItems = response.data.data.popularItems.map(item => ({
+          itemId: item.itemId, 
+          itemName: item.itemName, 
+          price: item.price,
+          image: item.image, 
+          time: item.time, 
+          category: item.category?.categoryName,
+          priceSimilar: item.priceSimilar, 
+          itemState: item.itemState,
+          minPrice: item.minPrice, 
+          maxPrice: item.maxPrice 
+        }));
+        
+        const recentItems = response.data.data.recentItems.map(item => ({
+          itemId: item.itemId, 
+          itemName: item.itemName, 
+          price: item.price,
+          image: item.image, 
+          time: item.time, 
+          category: item.category,
+          priceSimilar: item.priceSimilar, 
+          itemState: item.itemState,
+          minPrice: item.minPrice, 
+          maxPrice: item.maxPrice 
+        }));
+  
+        setProducts(popularItems);
+        setProductsLatest(recentItems);
+        setIsLoading(false);
+      } else {
+        console.error('Unexpected resultCode:', response.data.resultCode);
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching main page data:", error);
+      setIsLoading(false);
+    });
+
+  }, []);
 
   const handleLogoClick = () => {
     window.location.reload(); 
@@ -90,9 +90,9 @@ const Main = () => {
     setIsDropdownOpen(false);
   };
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>
-  // }
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   const filteredProducts = (products || []).filter(product => {
     const matchesSearch = product.itemName?.toLowerCase().includes(searchQuery.toLowerCase());

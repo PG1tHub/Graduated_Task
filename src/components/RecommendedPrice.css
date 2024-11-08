@@ -5,7 +5,6 @@
   font-style: normal;
 }
 
-
 .recommended-price {
   position: relative;
   width: 100%;
@@ -18,41 +17,50 @@
   color: #8cbfe8; 
 }
 
-.recommended-price.out-of-range .MuiSlider-thumb {
+/* .recommended-price.out-of-range .MuiSlider-thumb {
   color: red; 
-}
+} */
 
 .recommended-price .MuiSlider-track {
   color: #8cbfe8; 
 }
 
-.recommended-price.out-of-range .MuiSlider-track {
+/* .recommended-price.out-of-range .MuiSlider-track {
   color: red; 
-}
+} */
 
 .recommended-price-slider .MuiSlider-rail {
   color: #ddd; 
 }
 
-/* .MuiSlider-mark[data-out-of-range="false"] {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: blue !important;
+.MuiSlider-mark {
+  background-color: transparent; 
 }
 
-.MuiSlider-mark[data-out-of-range="true"] {
-  width: 15px;
-  height: 15px;
+.MuiSlider-mark[data-index="1"] {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background-color: red !important;
-} */
+  background-color: blue; 
+}
 
-/* .recommended-price .MuiSlider-mark {
-  width: 15px;  
-  height: 15px;
+.recommended-price.out-of-range .MuiSlider-mark[data-index="1"] {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-} */
+  background-color: red; 
+}
+
+.MuiSlider-markLabel {
+  font-size: 20px; 
+  color: #333; 
+  font-family: SUIT-Regular;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3px;
+  font-weight: bold;
+}
+
 
 .price-range {
   display: flex;
@@ -67,15 +75,6 @@
   font-weight: bold;
 }
 
-/* .out-of-range-marker {
-  position: absolute;
-  top: -20px;  
-  left: calc(100% + 20px); 
-  background-color: #8cbfe8;
-  padding: 4px;
-  border-radius: 4px;
-  color: black;
-} */
 
 .marker-label {
   font-size: 12px;
