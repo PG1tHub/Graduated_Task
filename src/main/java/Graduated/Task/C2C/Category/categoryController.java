@@ -17,16 +17,11 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class categoryController {
-
     private final CategoryService categoryService;
     @PostMapping("/recommended-price")
     public ResponseEntity<?> getCategoryPrice(@RequestBody priceFindDto priceFindDto){
         categoryPriceDto categoryPrice = categoryService.findCategoryPrice(priceFindDto.getCategory(), priceFindDto.getItemState());
         Message<categoryPriceDto> message = Message.of(200, categoryPrice);
         return new ResponseEntity<>(message, HttpStatus.OK);
-
     }
-
-
-
 }

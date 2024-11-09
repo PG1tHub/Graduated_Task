@@ -45,7 +45,7 @@ public class ItemRepositoryImpl extends Querydsl4RepositorySupport implements It
         return selectFrom(item).orderBy(item.viewCount.desc()).limit(6).fetch();
     }
     public List<Item> findRecentItem(){
-        return selectFrom(item).orderBy(item.createdDate.asc()).limit(6).fetch();
+        return selectFrom(item).orderBy(item.createdDate.desc()).limit(6).fetch();
     }
 
 
