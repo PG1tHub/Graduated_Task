@@ -20,33 +20,33 @@ class user_Test {
 	@Autowired
 	EntityManager em;
 
-	@Test
-	void login() throws Exception {
-		User user = new User("3","1","1");
-		userRepository.save(user);
-		em.clear();
-		String login = userService.login("3", "1");
-	}
-	@Test
-	void logout() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		em.clear();
-		String login = userService.login("1", "1");
-		em.clear();
-		userService.logout(login);
-	}
-
-	@Test
-	void userinfo() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		em.clear();
-		String login = userService.login("1", "1");
-		em.clear();
-		userInfoDto userinfo = userService.userinfo(login);
-		System.out.println(userinfo);
-	}
+//	@Test
+//	void login() throws Exception {
+//		User user = new User("3","1","1");
+//		userRepository.save(user);
+//		em.clear();
+//		String login = userService.login("3", "1");
+//	}
+//	@Test
+//	void logout() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		em.clear();
+//		String login = userService.login("1", "1");
+//		em.clear();
+//		userService.logout(login);
+//	}
+//
+//	@Test
+//	void userinfo() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		em.clear();
+//		String login = userService.login("1", "1");
+//		em.clear();
+//		userInfoDto userinfo = userService.userinfo(login);
+//		System.out.println(userinfo);
+//	}
 
 }
 

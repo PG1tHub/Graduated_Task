@@ -36,6 +36,7 @@ public class ItemService {
         Category category = categoryRepository.findByCategoryName(categoryNo).orElseThrow(()->new NullPointerException("존재하지않는 카테고리입니다."));
         Item item = new Item(name,image,price,user,category,itemState,priceSimilar);
         itemRepository.save(item);
+        category.plusCount();
         if (category.getItemCount()%20 ==0 ){
             String category_no = String.valueOf(category.getNo());
             Future<ProcessResult> python3 = new ProcessExecutor().command("python3", "home/ubuntu/Random_Forest_Model.py",category_no)
@@ -94,7 +95,7 @@ public class ItemService {
         return itemRepository.findPopularItem().stream().map(this::getItemDto).toList();
     }
     public List<ItemDto> findRecentItem(){
-        return itemRepository.findPopularItem().stream().map(this::getItemDto).toList();
+        return itemRepository.findRecentItem().stream().map(this::getItemDto).toList();
     }
 
     public List<Item> AllItem(){

@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @MappedSuperclass // 아래 필드를 컬럼으로 인식하게 함
 @EntityListeners(AuditingEntityListener.class)
-@EnableJpaAuditing
 public abstract class BaseEntity {
 
     @CreatedDate

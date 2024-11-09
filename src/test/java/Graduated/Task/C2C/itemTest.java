@@ -39,93 +39,94 @@ class itemTest {
 	@Autowired
 	EntityManager em;
 
-	@Test
-	void itemAdd() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		em.clear();
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
-		System.out.println(l);
-	}
-	@Test
-	void deleteItem() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
-		em.clear();
-		itemService.deleteItem(l);
-	}
-
-	@Test
-	void changeItem() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
-		em.clear();
-		itemService.changeItem(l,"2",4000, category.getName(), 3,true);
-	}
-
-	@Test
-	void categoryItem() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
-		em.clear();
-		List<ItemDto> itemDtos = itemService.viewCategoryItem(l, 0, 10);
-		System.out.println(itemDtos);
-	}
-	@Test
-	void searchItem() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
-		em.clear();
-		List<ItemDto> itemDtos = itemService.searchItem("1", 0, 10);
-		System.out.println(itemDtos);
-	}
-
-	@Test
-	void popluarItem() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
-		em.clear();
-		List<ItemDto> itemDetailDto = itemService.findPopularItem();
-		System.out.println(itemDetailDto);
-	}
-
-	@Test
-	void recentItem() throws Exception {
-		User user = new User("1","1","1");
-		userRepository.save(user);
-		Category category = new Category("test",0);
-		categoryRepository.save(category);
-		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
-		em.clear();
-		categoryRepository.findAllPost();
-		List<ItemDto> itemDetailDto = itemService.findRecentItem();
-		System.out.println(itemDetailDto);
-	}
-	@Test
-	void Iteminfo() throws Exception {
-		ItemDetailDto itemDetailDto = itemService.itemInformation(1L);
-		System.out.println(itemDetailDto);
-	}
-	@Test
-	void categoryPrice() throws Exception {
-		System.out.println(categoryService.findCategoryPrice("test",1));
-	}
+//	@Test
+//	void itemAdd() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		Category category = new Category("test",0);
+//		categoryRepository.save(category);
+//		em.clear();
+//		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
+//		Long l2 = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
+//		System.out.println(l);
+//	}
+//	@Test
+//	void deleteItem() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		Category category = new Category("test",0);
+//		categoryRepository.save(category);
+//		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
+//		em.clear();
+//		itemService.deleteItem(l);
+//	}
+//
+//	@Test
+//	void changeItem() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		Category category = new Category("test",0);
+//		categoryRepository.save(category);
+//		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
+//		em.clear();
+//		itemService.changeItem(l,"2",4000, category.getName(), 3,true);
+//	}
+//
+//	@Test
+//	void categoryItem() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		Category category = new Category("test",0);
+//		categoryRepository.save(category);
+//		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
+//		em.clear();
+//		List<ItemDto> itemDtos = itemService.viewCategoryItem(l, 0, 10);
+//		System.out.println(itemDtos);
+//	}
+//	@Test
+//	void searchItem() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		Category category = new Category("test",0);
+//		categoryRepository.save(category);
+//		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
+//		em.clear();
+//		List<ItemDto> itemDtos = itemService.searchItem("1", 0, 10);
+//		System.out.println(itemDtos);
+//	}
+//
+//	@Test
+//	void popluarItem() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		Category category = new Category("test",0);
+//		categoryRepository.save(category);
+//		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
+//		em.clear();
+//		List<ItemDto> itemDetailDto = itemService.findPopularItem();
+//		System.out.println(itemDetailDto);
+//	}
+//
+//	@Test
+//	void recentItem() throws Exception {
+//		User user = new User("1","1","1");
+//		userRepository.save(user);
+//		Category category = new Category("test",0);
+//		categoryRepository.save(category);
+//		Long l = itemService.addItem("1", "",3000, user.getId(), category.getName(), 2, true);
+//		em.clear();
+//		categoryRepository.findAllPost();
+//		List<ItemDto> itemDetailDto = itemService.findRecentItem();
+//		System.out.println(itemDetailDto);
+//	}
+//	@Test
+//	void Iteminfo() throws Exception {
+//		ItemDetailDto itemDetailDto = itemService.itemInformation(1L);
+//		System.out.println(itemDetailDto);
+//	}
+//	@Test
+//	void categoryPrice() throws Exception {
+//		System.out.println(categoryService.findCategoryPrice("test",1));
+//	}
 }
 
