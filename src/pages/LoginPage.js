@@ -11,24 +11,23 @@ function LoginPage({ setIsLoggedIn }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com:8080/login', {
+      const response = await fetch('http://ec2-3-38-191-115.ap-northeast-2.compute.amazonaws.com:8080/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ id, password }),
       });
-      const data = await response.json();
-      
+      const result = await response.json();
       if (response.ok) {
-        // JWT 쿠키 설정
-        sessionStorage.setItem('Authorization',data.accessToken);
+        // JWT 설정
+        sessionStorage.setItem('Authorization',result.data.accessToken);
         // navigate('/', { state: { Authorization: data.accessToken } });
         //localStorage.set('Authorization', 'Bearer ' + data.accessToken, { secure: true, sameSite: 'Strict' });
         setIsLoggedIn(true);
         navigate('/');
       } else {
-        console.error('Login failed:', data.message);
+        console.error('Login failed:', result.message);
         alert('로그인 실패. 사용자 정보를 확인하세요.');
       }
     } catch (error) {

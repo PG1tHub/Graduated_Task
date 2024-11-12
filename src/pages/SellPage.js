@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-// import sampleData from '../dummy'; 
-// import sampleDataLatest from '../dummy_latest';
+import { Link } from 'react-router-dom';
 import Menu from '../components/Menu';
 import Logo from '../images/logo.png';
-import RecommendedPrice from '../components/RecommendedPrice';
+import RecommendedPrice from '../components/SellRecommendedPrice';
 import CategorySelector from '../components/CategorySelector';
 import './SellPage.css';
-// import axios from 'axios';
+import Images from '../components/Images';
 
 const SellPage = () => {
   const [images, setImages] = useState('');
@@ -39,36 +37,15 @@ const SellPage = () => {
         return 0;
     }
   }
-  
-    // const updateRecommendedPrice = () => {
-    //   const itemStateValue = getItemStateValue(itemState);
-    //   console.log('item state value: ', itemStateValue);
-  
-    //   const foundProduct = sampleData.find(item => 
-    //     item.category === category.major && 
-    //     item.itemState === getItemStateValue(itemState)
-    //   );
-    //   console.log('Found Product : ', foundProduct);
-  
-    //   if (foundProduct) {
-    //     const newRecommendedPrice = {
-    //       min: foundProduct.minPrice,
-    //       max: foundProduct.maxPrice,
-    //     };
-    //     setRecommendedPrice(newRecommendedPrice);
-    //     setPriceWarning(''); 
-    //   } else {
-    //     setRecommendedPrice({ min: 0, max: 0 });
-    //     setPriceWarning('추천 가격 정보 없음');
-    //   }
-    // };
 
   const updateRecommendedPrice = async () => {
     const itemStateValue = getItemStateValue(itemState);
-    console.log('item state value: ', itemStateValue);
+    // console.log('item state value: ', itemStateValue);
+    console.log('Category Minor:', category ? category.minor : 'category가 없음');
+    console.log('Item State Value:', itemStateValue ? itemStateValue : 'itemState가 없음');
   
     try {
-      const response = await fetch(`http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com:8080/recommended-price`, {
+      const response = await fetch(`http://ec2-3-38-191-115.ap-northeast-2.compute.amazonaws.com:8080/recommended-price`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
@@ -85,11 +62,11 @@ const SellPage = () => {
   
       const data = await response.json();
       console.log('Recommended Price Data:', data);
-  
+      console.log(data.state);
       if (data.resultCode === 200 && data.data) {
         const newRecommendedPrice = {
-          min: data.data.minPrice,
-          max: data.data.maxPrice,
+          min: data.data.recommendedMinPrice,
+          max: data.data.recommendedMaxPrice,
         };
         setRecommendedPrice(newRecommendedPrice);
         setPriceWarning('');
@@ -153,7 +130,8 @@ const SellPage = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImages(reader.result);
-        setImageFile(file);
+        setImageFile(localStorage.length.toString());
+        localStorage.setItem(localStorage.length.toString(),reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -180,42 +158,40 @@ const SellPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    // formData.append('image', imageFile);
-    // formData.append('category', 'AirPods Pro 2');
-    // const formData = new FormData();
-    // formData.append('images', '');
-    // formData.append('itemName', itemName);
-    // formData.append('category', JSON.stringify(category));
-    // formData.append('itemState', itemState);
-    // formData.append('price', price);
-    // formData.append('priceSimilar', priceSimilar);
-    // console.log(formData);
     const token = sessionStorage.getItem('Authorization');
+    const requestData = {
+      // images: images,
+      itemName: itemName,
+      price: price,
+      itemState: getItemStateValue(itemState),
+      priceSimilar: priceSimilar
+    };
+
+    // category가 null이나 default가 아닌 경우에만 추가
+    if (category && category.minor && category.minor !== 'default') {
+      requestData.category = category.minor;
+    }
 
     try {
-      const response = await fetch('http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com/item/create', {
+      const response = await fetch('http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com:8080/item/create', {
         method: 'POST',
-        body: JSON.stringify({
-          images: images,
-          itemName: itemName,
-          price: price,
-          category: category,
-          itemState: itemState,
-          priceSimilar: priceSimilar
-        }),
-        
+        body: JSON.stringify(requestData),
         headers: {
           'Authorization': `Bearer ${token}`,
-          // 'Content-Type': 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
         },
       });
 
       if(!response.ok){
-        throw new Error('Network response was not ok');
+        throw new Error('Network response was not ok'+response.status);
       }
 
       const result = await response.json();
       console.log(result);
+
+      const CategoryImage = Images[category.minor];
+      setImages(CategoryImage);
+
     } catch (error) {
       console.error('Error uploading image:', error);
     }
@@ -254,7 +230,7 @@ const SellPage = () => {
             />
           </label>
 
-          <div className="itemName">상품명</div>
+          <div className="productName">상품명</div>
           <input
             type="text"
             id="itemName"
@@ -325,8 +301,8 @@ const SellPage = () => {
           </div>
 
           <RecommendedPrice 
-            minPrice={recommendedPrice.min} 
-            maxPrice={recommendedPrice.max} 
+            recommendedMinPrice={recommendedPrice.min} 
+            recommendedMaxPrice={recommendedPrice.max} 
             price={Number(price)}
             className='graph'
           />
@@ -344,7 +320,9 @@ const SellPage = () => {
             <div style={{ color: 'red' }}>{priceWarning}</div> 
           )}
           {/* <div className='buttons'>저장</div> */}
+          <Link to='/'>
             <button type="submit" className='buttonSubmit'>등록</button>   
+          </Link>
         </form>  
       </div>
     </div>

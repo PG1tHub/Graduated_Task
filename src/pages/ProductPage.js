@@ -26,7 +26,7 @@ const ProductPage = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://ec2-54-180-1-150.ap-northeast-2.compute.amazonaws.com:8080/itemInfo/${itemId}`)
+    axios.get(`http://ec2-3-38-191-115.ap-northeast-2.compute.amazonaws.com:8080/itemInfo/${itemId}`)
       .then(response => {
         if (response.data.resultCode === 200) {
           setProduct(response.data.data); // 데이터가 있는 경우
@@ -101,7 +101,7 @@ if (typeof productState !== 'number') {
 
       <div className="product-details">
         <div className="product-image">
-          <img src={product.image} alt={product.itemName} />
+          <img src={localStorage.getItem(product.images)} alt={product.itemName} />
         </div>
         <div className="product-info">
           <div className="product-category">

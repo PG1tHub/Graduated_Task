@@ -72,7 +72,7 @@ const CategorySelector = ({ category, setCategory }) => {
             {category.middle === "아이폰" && (
               <>
                 <option value="아이폰SE">아이폰SE</option>
-                <option value="아이폰12">아이폰12</option>
+                <option value="Iphone 15 pro 256gb">아이폰15</option>
               </>
             )}
             {category.middle === "갤럭시" && (
