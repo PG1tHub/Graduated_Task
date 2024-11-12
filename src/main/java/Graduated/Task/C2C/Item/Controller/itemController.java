@@ -9,7 +9,6 @@ import Graduated.Task.C2C.core.ErrorMessage;
 import Graduated.Task.C2C.core.JwtTokenUtil;
 import Graduated.Task.C2C.core.Message;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +22,14 @@ import java.util.NoSuchElementException;
 public class itemController {
     private final ItemService itemService;
     private final JwtTokenUtil jwtTokenUtil;
-    @GetMapping(value = {"/api/{categoryNo}/{page}","/api/{categoryNo}"})
-    public ResponseEntity<?> CategoryItem(@PathVariable("categoryNo") Long categoryNo, @PathVariable("page") Integer page ){
-        if(page==null) {
-            page = 1;
-        }
+    @GetMapping(value = {"/api/{categoryNo}/{page}"})
+    public ResponseEntity<?> CategoryItem(@PathVariable("categoryNo") Long categoryNo, @PathVariable("page") int page) {
         List<ItemDto> itemDtos = itemService.viewCategoryItem(categoryNo, page, 10);
         Message<List<ItemDto>> message = Message.of(200, itemDtos);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/search/{item}/{page}","/search/{item}"})
+    @GetMapping(value = {"/search/{item}/{page}"})
     public ResponseEntity<?> SearchItem(@PathVariable("item") String word,@PathVariable("page") Integer page){
         if(page==null) {
             page = 1;
@@ -63,13 +59,14 @@ public class itemController {
         }
     }
     @PostMapping("/item/create")
-    public ResponseEntity<?> createItem(joinItemDto joinItemDto, HttpServletRequest request){
+    public ResponseEntity<?> createItem(@RequestBody joinItemDto joinItemDto, HttpServletRequest request){
+        System.out.println(joinItemDto);
         String accessToken = jwtTokenUtil.resolveAccessToken(request);
         String userId = jwtTokenUtil.getclaims(accessToken).getSubject();
         try{
-            Long itemNo = itemService.addItem(joinItemDto.getItemName(), joinItemDto.getPrice(), userId, joinItemDto.getCategoryNo(), joinItemDto.getItemState(),
+            Long itemNo = itemService.addItem(joinItemDto.getItemName(), joinItemDto.getImages(), joinItemDto.getPrice(), userId, joinItemDto.getCategory(), joinItemDto.getItemState(),
                     joinItemDto.isPriceSimilar());
-            Message<itemRequestDto> message = Message.of(201,new itemRequestDto(itemNo,"상품이 성공적으로 수정되었습니다."));
+            Message<itemRequestDto> message = Message.of(201,new itemRequestDto(itemNo,"상품이 성공적으로 등록되었습니다."));
             return new ResponseEntity<>(message,HttpStatus.CREATED);
         }
         catch (NullPointerException e) {
@@ -77,15 +74,16 @@ public class itemController {
             return new ResponseEntity<>(errorMessage,HttpStatus.NOT_FOUND);
         }
         catch (Exception e){
-            ErrorMessage errorMessage = ErrorMessage.of(500, "다시 시도해주십시오");
+            ErrorMessage errorMessage = ErrorMessage.of(500, e.getMessage());
             return new ResponseEntity<>(errorMessage,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PatchMapping("/item/patch/{itemNo}")
-    public ResponseEntity<?> changeItem(@PathVariable("itemNo") Long itemNo, joinItemDto joinItemDto,HttpServletRequest request){
+    public ResponseEntity<?> changeItem(@PathVariable("itemNo") Long itemNo, @RequestBody joinItemDto joinItemDto,HttpServletRequest request){
         try{
-            itemService.changeItem(itemNo, joinItemDto.getItemName(), joinItemDto.getPrice(), joinItemDto.getCategoryNo(), joinItemDto.getItemState(),
+            itemService.changeItem(itemNo, joinItemDto.getItemName(), joinItemDto.getPrice(), joinItemDto.getCategory(), joinItemDto.getItemState(),
                     joinItemDto.isPriceSimilar());
+
             Message<itemRequestDto> message = Message.of(200,new itemRequestDto(itemNo,"상품이 성공적으로 수정되었습니다."));
             return new ResponseEntity<>(message,HttpStatus.OK);
         }

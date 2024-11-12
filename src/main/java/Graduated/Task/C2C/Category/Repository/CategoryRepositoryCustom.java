@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface CategoryRepositoryCustom {
     Optional<categoryPrice> findCategoryPrice(Long categoryNo, int state);
+    Optional<Category> findByCategoryName(String categoryName);
+    Optional<categoryPrice> findCategoryPriceByName(String name,int state);
 }

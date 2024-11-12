@@ -31,5 +31,14 @@ public class CategoryRepositoryImpl extends Querydsl4RepositorySupport implement
                 .join(QcategoryPrice.categoryPrice.category).fetchJoin()
                 .fetchOne());
     }
+    public Optional<categoryPrice> findCategoryPriceByName(String category,int state){
+        return Optional.ofNullable(selectFrom(QcategoryPrice.categoryPrice)
+                .where(QcategoryPrice.categoryPrice.category.name.eq(category), QcategoryPrice.categoryPrice.status.eq(state))
+                .join(QcategoryPrice.categoryPrice.category).fetchJoin()
+                .fetchOne());
+    }
+    public Optional<Category> findByCategoryName(String categoryName){
+        return Optional.ofNullable(selectFrom(category).where(category.name.eq(categoryName)).fetchOne());
+    }
 
 }

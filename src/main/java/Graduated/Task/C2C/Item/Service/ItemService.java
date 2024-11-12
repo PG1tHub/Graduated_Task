@@ -12,9 +12,14 @@ import Graduated.Task.C2C.User.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zeroturnaround.exec.ProcessExecutor;
+import org.zeroturnaround.exec.ProcessResult;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +31,22 @@ public class ItemService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public Long addItem(String name, int price, String userId, Long categoryNo, int itemState, boolean priceSimilar)  {
+    public Long addItem(String name, String image,int price, String userId, String categoryNo, int itemState, boolean priceSimilar) throws Exception {
         User user = userRepository.findByUserId(userId).orElseThrow(()->new NullPointerException("존재하지않는 사용자입니다"));
-        Category category = categoryRepository.findById(categoryNo).orElseThrow(()->new NullPointerException("존재하지않는 카테고리입니다."));
-        Item item = new Item(name,price,user,category,itemState,priceSimilar);
+        Category category = categoryRepository.findByCategoryName(categoryNo).orElseThrow(()->new NullPointerException("존재하지않는 카테고리입니다."));
+        Item item = new Item(name,image,price,user,category,itemState,priceSimilar);
         itemRepository.save(item);
+        category.plusCount();
+        if (category.getItemCount()%20 ==0 ){
+            String category_no = String.valueOf(category.getNo());
+            Future<ProcessResult> python3 = new ProcessExecutor().command("python3", "home/ubuntu/Random_Forest_Model.py",category_no)
+                    .redirectOutput(System.out)
+                    .redirectError(System.out).start().getFuture();
+        }
         return item.getNo();
     }
+
+
     @Transactional
     public void deleteItem(Long itemId){
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new NullPointerException("존재하지않는 아이템입니다."));
@@ -48,19 +62,19 @@ public class ItemService {
     }
 
     @Transactional
-    public void changeItem(Long itemId,String name, int price, Long categoryNo,int itemState,boolean priceSimilar)  {
+    public void changeItem(Long itemId,String name, int price, String categoryNo,int itemState,boolean priceSimilar)  {
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new NullPointerException("존재하지않는 아이템입니다."));
-        Category category = categoryRepository.findById(categoryNo).orElseThrow(()->new NullPointerException("존재하지않는 카테고리입니다."));
+        Category category = categoryRepository.findByCategoryName(categoryNo).orElseThrow(()->new NullPointerException("존재하지않는 카테고리입니다."));
         item.changeItem(name,price,priceSimilar,itemState,category);
         itemRepository.save(item);
     }
 
     public List<ItemDto> viewCategoryItem(Long categoryNo, final int startPage, final int PageSize) {
-        List<Item> categoryItem = itemRepository.findCategoryWithItem(categoryNo, startPage, PageSize);
+        List<Item> categoryItem = itemRepository.findCategoryWithItem(categoryNo, startPage*10, PageSize);
         return categoryItem.stream().map(this::getItemDto).toList();
     }
     public List<ItemDto> searchItem(String word,final int startPage, final int PageSize){
-        List<Item> searchItem = itemRepository.searchItem(word,startPage, PageSize);
+        List<Item> searchItem = itemRepository.searchItem(word,startPage*10, PageSize);
         return searchItem.stream().map(this::getItemDto).toList();
     }
     @Transactional
@@ -72,16 +86,16 @@ public class ItemService {
         int maxPrice = categoryPrice.getMaxPrice();
         int minPrice = categoryPrice.getMinPrice();
         String name = item.getCategory().getName();
-        return new ItemDetailDto(item.getNo(),item.getName(),item.getPrice(),name,minPrice,maxPrice,item.getItemState());
+        return new ItemDetailDto(item.getNo(),item.getImage(),item.getName(),item.getPrice(),name,minPrice,maxPrice,item.getItemState());
     }
     private ItemDto getItemDto(Item item) {
-        return new ItemDto(item.getNo(),item.getName(),item.getPrice(),item.getPriceSimilar(),item.getCreatedDate());
+        return new ItemDto(item.getNo(),item.getImage(),item.getName(),item.getPrice(),item.getPriceSimilar(),item.getCreatedDate());
     }
     public List<ItemDto> findPopularItem(){
         return itemRepository.findPopularItem().stream().map(this::getItemDto).toList();
     }
     public List<ItemDto> findRecentItem(){
-        return itemRepository.findPopularItem().stream().map(this::getItemDto).toList();
+        return itemRepository.findRecentItem().stream().map(this::getItemDto).toList();
     }
 
     public List<Item> AllItem(){
@@ -96,8 +110,4 @@ public class ItemService {
     public List<ItemDto> userSoldItem(String userNo){
         return itemRepository.findBySoldItem(userNo).stream().map(this::getItemDto).toList();
     }
-
-
-
-
 }

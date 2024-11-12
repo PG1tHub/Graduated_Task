@@ -10,7 +10,6 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-
 public class ItemDto {
     private Long itemId;
 
@@ -24,9 +23,9 @@ public class ItemDto {
 
     private LocalDateTime time;
 
-    public ItemDto(Long itemId, String itemName, int price, boolean priceSimilar, LocalDateTime time) {
+    public ItemDto(Long itemId, String image,String itemName, int price, boolean priceSimilar, LocalDateTime time) {
         this.itemId = itemId;
-        this.image="";
+        this.image=image;
         this.itemName = itemName;
         this.price = price;
         this.priceSimilar = priceSimilar;

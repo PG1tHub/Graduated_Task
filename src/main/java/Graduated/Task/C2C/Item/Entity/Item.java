@@ -9,10 +9,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@ToString
 public class Item extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,13 +51,15 @@ public class Item extends BaseEntity {
     @JsonIgnore//개발 과정에서만 사용 , 추후 DTO 변환과정에서는 삭제예정
     private Category category;
 
-    public Item(String name, int price, User seller, Category category,int itemState,boolean priceSimilar) {
+    public Item(String name, String image,int price, User seller, Category category,int itemState,boolean priceSimilar) {
         this.name = name;
-        this.image="";
+        this.image=image;
         this.price = price;
         this.seller = seller;
         this.category = category;
         this.type = State.sale;
+        this.itemState = itemState;
+        this.priceSimilar=priceSimilar;
         seller.getSellItem().add(this);
         category.getItem().add(this);
     }
