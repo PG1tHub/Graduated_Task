@@ -1,0 +1,179 @@
+@font-face {
+  font-family: 'SUIT-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: SUIT-Regular;
+  margin: 0;
+  padding: 0;
+}
+
+.product-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.App-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.logo {
+  width: 250px;
+  height: auto;
+  display: flex;
+  margin-right: auto;
+}
+
+.category-dropdown {
+  position: relative;
+}
+
+.category-button {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.categoryIcon {
+  margin-right: 10px;
+  width: 25px;
+}
+
+.category-text{
+  font-size: 12px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  list-style: none;
+}
+
+.dropdown-menu li {
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.product-details {
+  display: flex;
+  margin-bottom: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.product-info {
+  flex: 1;
+  padding-left: 20px;
+  margin: 50px;
+}
+
+.product-image {
+  flex: 1;
+  margin: 100px 50px 0 100px;
+}
+
+.product-image img {
+  width: 400px;
+  height: 400px;
+  border-radius: 10px;
+}
+
+
+.category-name {
+  font-size: 0.9em;
+  font-weight: 200;
+  color: gray;
+  margin-top: 30px;
+}
+
+.product-title {
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.product-title .emoty {
+  width: 20px;
+  margin: 0;
+}
+
+.product-string {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.product-price {
+  margin-top: 50px;
+  font-size: 30px;
+  color: #28275a;
+  font-weight: bold;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.wish-button, .chatting-button {
+  width: 130px;
+  height: 40px;
+  padding: 10px 25px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  font-family: SUIT-Regular;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  margin: 15px;
+}
+
+.deal-button {
+  width: 130px;
+  height: 40px;
+  padding: 0px 25px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  font-family: SUIT-Regular;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  margin: 15px;
+  text-align: center; 
+  line-height: 40px; 
+}
+
+.product-state {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.graph {
+  font-size: 18px;
+  display: flex;
+  margin: 20px 0;
+}
+
+/* .trust {
+  font-size: 18px;
+} */
