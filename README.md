@@ -24,7 +24,7 @@
 | 이름     | 역할        | GitHub                                  |
 |----------|-------------|------------------------------------------|
 | 박지원   | ML / PM     | [G1](https://github.com/PG1tHub) |
-| 김민지   | Frontend    | [minji](https://github.com/meanzzi)   |
+| 김민지   | Frontend    | [Minji](https://github.com/meanzzi)   |
 | 이하준   | Backend     | [developer-hajun](https://github.com/developer-hajun) |
 | 배성환   | Backend     | [pear-c](https://github.com/pear-c) |
 
