@@ -3,7 +3,8 @@
 머신러닝 기반 가격 예측 모델을 활용한 중고 거래 웹서비스입니다.  
 사용자와 판매자 모두에게 **합리적인 가격 범위**를 제시합니다.
 
-[📄 프로젝트 기획서 (Notion)](https://www.notion.so/2325a4dbd5e480b08bb7e6d5067b1c5b?source=copy_linke)
+[📄 프로젝트 기획서 (Notion)](https://www.notion.so/2325a4dbd5e480b08bb7e6d5067b1c5b?source=copy_linke)  
+
 [📄 발표자료 (PDF)](./GT_FairDay.pdf)
 
 ---
